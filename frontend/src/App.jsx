@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import Root from "./components/pages/Root";
 import Home from "./components/pages/Home";
 import Cart from "./components/pages/Cart";
-import Product from "./components/pages/Product";
+import Product, { loader as productLoader } from "./components/pages/Product";
 
 import { queryClient } from "./util/utilities";
 
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <Product />,
+        loader: productLoader,
       },
     ],
   },

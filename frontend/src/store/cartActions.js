@@ -29,8 +29,14 @@ export const addProductToCart = function (productObject, productsList) {
       const data = await checkForProduct();
       const product = data.data.data;
 
-      console.log(product);
-      console.log(productsList.find((p) => p.id === productObject.id));
+      const prod = productsList.find((p) => p.id === productObject.id);
+      const prodQuantity = prod?.productQuantity;
+      const stockQuantity = product.quantities.find(
+        (q) => q.quantity === productObject.quantity
+      ).stock;
+
+      if (prodQuantity === stockQuantity)
+        throw new Error(`Could not add product to cart`);
 
       dispatch(cartActions.addProduct(productObject));
 
@@ -51,6 +57,6 @@ export const addProductToCart = function (productObject, productsList) {
 
     setTimeout(() => {
       dispatch(uiActions.hideNotification());
-    }, 3000);
+    }, 4000);
   };
 };

@@ -12,7 +12,20 @@ export const fetchProducts = async function ({ signal, queryString }) {
   });
 
   if (!response.ok)
-    throw new Error("An error occurred when fetching the events.");
+    throw new Error("An error occurred when fetching the products.");
+
+  const data = await response.json();
+
+  return data;
+};
+
+export const fetchOneProduct = async function ({ signal, id }) {
+  const response = await fetch(`http://localhost:3000/products/${id}`, {
+    signal,
+  });
+
+  if (!response.ok)
+    throw new Error("An error occurred when fetching this product.");
 
   const data = await response.json();
 

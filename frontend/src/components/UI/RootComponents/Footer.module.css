@@ -1,0 +1,37 @@
+.footer {
+  width: 100%;
+  background-color: #f03e3e;
+  color: #fff;
+}
+
+.footer__section {
+  padding: 3rem 5rem;
+}
+
+.footer__link__container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer__link {
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer__logo {
+  font-size: 2.6rem;
+  font-weight: 300;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}

@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+
+  overflow-x: hidden;
+}
+
+section {
+  max-width: 140rem;
+  padding: 10rem 5rem;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 3.2rem;
+  margin-bottom: 3rem;
+  font-weight: 400;
+  letter-spacing: 0rem;
+  text-transform: capitalize;
+  position: relative;
+}
+
+h2::after {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 15rem;
+  height: 0.5rem;
+  background-color: #f03e3e;
+  z-index: -10;
+  border-radius: 0.5rem;
+}
+
+p {
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #f03e3e !important;
+}

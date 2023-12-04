@@ -1,0 +1,25 @@
+.notification {
+  position: fixed;
+  /* width: 20rem; */
+  padding: 2rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 2rem;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+}
+
+.notification__success {
+  background-color: #37b24d;
+}
+
+.notification__fail {
+  background-color: #f03e3e;
+}
+
+.notification__message {
+  font-size: 1.6rem;
+  font-weight: 400;
+}

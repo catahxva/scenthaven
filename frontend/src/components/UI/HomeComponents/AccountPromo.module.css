@@ -1,0 +1,61 @@
+.account__grid {
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
+  column-gap: 5rem;
+}
+
+.account__flex__column {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  flex-direction: column;
+}
+
+.account__feat {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.account__container__btns {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.account__link__big {
+  padding: 0.8rem 1.6rem;
+  background-color: #f03e3e;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.8rem;
+  border-radius: 1rem;
+}
+
+.account__link__small {
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.account__svg {
+  width: 12rem;
+  height: 12rem;
+  color: #f03e3e;
+  margin-top: -1rem;
+}
+
+.account__feat__text {
+  width: calc(100% - 14rem);
+}
+
+.account__feat__title {
+  color: #333;
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+.account__feat__par {
+  font-size: 1.6rem;
+}

@@ -1,0 +1,150 @@
+span {
+  display: block;
+}
+
+.cart__section {
+  padding-top: 12rem;
+  min-height: 100vh;
+}
+
+.cart__container__placeholder {
+  width: 100%;
+}
+
+.cart__placeholder__text {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.cart__placeholder__link {
+  color: #333;
+}
+
+.cart__items__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.cart__item__container {
+  width: 100%;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #333;
+}
+
+.cart__item__container:last-child {
+  border-bottom: none;
+}
+
+.cart__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem;
+}
+
+.cart__item__container__img {
+  width: 6rem;
+  height: 12rem;
+}
+
+.cart__item__img {
+  width: 100%;
+  height: auto;
+}
+
+.cart__item__info {
+  width: 20rem;
+}
+
+.cart__item__name {
+  font-size: 2rem;
+  font-weight: 500;
+  border-bottom: 0.4rem;
+}
+
+.cart__item__brand {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+}
+
+.cart__item__selected__quantity {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.cart__item__price {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.cart__item__quantity__controller {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.cart__item__button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #f03e3e;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart__item__svg {
+  width: 2rem;
+  height: 2rem;
+  color: #f03e3e;
+}
+
+.cart__item__quantity {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.cart__item__remove {
+  background-color: transparent;
+  color: #f03e3e;
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.cart__warning__stock {
+  font-size: 1.8rem;
+  color: #f03e3e;
+  font-weight: 500;
+}
+
+.cart__total__container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart__total {
+  font-size: 2rem;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cart__checkout {
+  background-color: #f03e3e;
+  font-size: 2rem;
+  font-weight: 500;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1rem;
+  color: #fff;
+  cursor: pointer;
+}

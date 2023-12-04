@@ -1,0 +1,153 @@
+.card {
+  width: 25rem;
+  height: 40rem;
+  overflow: hidden;
+  border-radius: 2rem;
+  border: 1px solid #333;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.card__link {
+  color: inherit;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.container__image {
+  width: 25rem;
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-bottom: 1px solid #333;
+  margin-bottom: 1rem;
+}
+
+.card__image {
+  width: 100%;
+  height: 15rem;
+  object-fit: contain;
+}
+
+.card__brand {
+  font-size: 1.6rem;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.card__name {
+  font-size: 2rem;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.4rem;
+  text-transform: capitalize;
+}
+
+.card__info {
+  font-size: 1.6rem;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 0.4rem;
+  text-transform: capitalize;
+}
+
+.card__price {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.card__rating {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card__container__stars {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.card__star {
+  width: 2rem;
+  height: 2rem;
+  color: #f03e3e;
+}
+
+.card__star__grey {
+  width: 2rem;
+  height: 2rem;
+  color: #333;
+}
+
+.card__ratings__amount {
+  display: block;
+  font-size: 1.8rem;
+}
+
+.card__no__rating {
+  display: block;
+  font-size: 1.8rem;
+}
+
+.card__buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__select {
+  font-family: inherit;
+  color: #333;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.card__button {
+  font-size: 1.6rem;
+  font-family: inherit;
+  background-color: #f03e3e;
+  border: none;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  z-index: 20;
+  background-color: #777;
+  opacity: 0.2;
+}
+
+.card__no__stock__container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.card__no__stock {
+  font-size: 2rem;
+  font-family: inherit;
+  color: #f03e3e;
+  text-transform: uppercase;
+  font-weight: 500;
+}

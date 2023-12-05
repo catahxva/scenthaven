@@ -36,7 +36,7 @@ export const addProductToCart = function (productObject, productsList) {
       ).stock;
 
       if (prodQuantity === stockQuantity)
-        throw new Error(`Could not add product to cart`);
+        throw new Error(`Couldn't add product, max quantity reached`);
 
       dispatch(cartActions.addProduct(productObject));
 
@@ -50,7 +50,7 @@ export const addProductToCart = function (productObject, productsList) {
       dispatch(
         uiActions.showNotification({
           status: "error",
-          message: "Could not add product to cart, please try again",
+          message: err.message,
         })
       );
     }

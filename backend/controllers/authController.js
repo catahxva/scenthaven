@@ -28,6 +28,8 @@ const createSendToken = (user, statusCode, res) => {
 
 exports.signUp = async function (req, res, next) {
   try {
+    console.log(req.body);
+
     const newUser = await User.create({
       userName: req.body.userName,
       email: req.body.email,

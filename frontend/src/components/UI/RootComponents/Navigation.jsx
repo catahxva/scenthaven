@@ -64,8 +64,12 @@ function Navigation() {
           </Link>
           {!isAuth && (
             <>
-              <Link className={classes.nav__link}>Sign Up</Link>
-              <Link className={classes.nav__link}>Login</Link>
+              <Link className={classes.nav__link} to="/auth?mode=signup">
+                Sign Up
+              </Link>
+              <Link className={classes.nav__link} to="/auth?mode=login">
+                Login
+              </Link>
             </>
           )}
           {isAuth && (

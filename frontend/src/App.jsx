@@ -5,6 +5,13 @@ import Root from "./components/pages/Root";
 import Home from "./components/pages/Home";
 import Cart from "./components/pages/Cart";
 import Product, { loader as productLoader } from "./components/pages/Product";
+import Authentication, {
+  action as authAction,
+} from "./components/pages/Authentication";
+import AuthMessage from "./components/pages/AuthMessage";
+import AuthVerify, {
+  action as authVerifyAction,
+} from "./components/pages/AuthVerify";
 
 import { queryClient } from "./util/utilities";
 
@@ -25,6 +32,20 @@ const router = createBrowserRouter([
         path: "/products/:id",
         element: <Product />,
         loader: productLoader,
+      },
+      {
+        path: "/auth",
+        element: <Authentication />,
+        action: authAction,
+      },
+      {
+        path: "/auth-message",
+        element: <AuthMessage />,
+      },
+      {
+        path: "/auth-verify/:token",
+        element: <AuthVerify />,
+        action: authVerifyAction,
       },
     ],
   },

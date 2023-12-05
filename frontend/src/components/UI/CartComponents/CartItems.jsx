@@ -9,7 +9,12 @@ function CartItems({ items }) {
     <>
       <div className={classes.cart__items__container}>
         {items.map((item) => {
-          return <CartItem item={item} key={item.id} />;
+          return (
+            <CartItem
+              item={item}
+              key={`${item.id}${item.selectedQuantity.quantity}`}
+            />
+          );
         })}
       </div>
       <div className={classes.cart__total__container}>

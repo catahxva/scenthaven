@@ -1,55 +1,26 @@
-import { useState } from "react";
-
 import { Link } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
-import { addProductToCart } from "../../store/cartActions";
+import useProductData from "../../hooks/useProductData";
 
 import classes from "./ProductCard.module.css";
 
-const processBrand = function (str) {
-  return str
-    .split(" ")
-    .map((string) => string.toUpperCase())
-    .join(" ");
-};
-
-const processInfo = function (str1, str2) {
-  return `${str1.split("")[0].toUpperCase() + str1.slice(1)} ${str2
-    .split(" ")
-    .map((string) => string.split("")[0].toUpperCase() + string.slice(1))
-    .join(" ")}`;
-};
-
-const stockCallback = (q) => q.stock > 0;
-
 function ProductCard({ product }) {
-  const [selectedQuantityIndex, setSelectedQuantityIndex] = useState(0);
-  const productList = useSelector((state) => state.cart.items);
-  const dispatch = useDispatch();
-
-  const brand = processBrand(product.brand);
-  const info = processInfo(product.gender, product.concentration);
-
-  const rating = product.ratingsAverage ? true : false;
-  const ratingArr = new Array(product.ratingsAverage).fill(0);
-  const ratingDifArr = new Array(5 - product.ratingsAverage).fill(0);
-
-  const outOfStock = !product.quantities.some(stockCallback);
-  const inStockQuantities = product.quantities.filter(stockCallback);
+  const {
+    selectedQuantityIndex,
+    setSelectedQuantityIndex,
+    addHandler,
+    brand,
+    info,
+    rating,
+    ratingArr,
+    ratingDifArr,
+    outOfStock,
+    inStockQuantities,
+    name,
+  } = useProductData(product, 0);
 
   const selectChangeHandler = function (e) {
     setSelectedQuantityIndex(e.target.value);
-  };
-
-  const addHandler = function (id, list) {
-    const productObject = {
-      id,
-      quantity: inStockQuantities[selectedQuantityIndex].quantity,
-      productQuantity: 1,
-    };
-
-    dispatch(addProductToCart(productObject, list));
   };
 
   return (
@@ -59,7 +30,7 @@ function ProductCard({ product }) {
           <img src={product.imageCover} className={classes.card__image} />
         </div>
         <span className={classes.card__brand}>{brand}</span>
-        <span className={classes.card__name}>{product.name}</span>
+        <span className={classes.card__name}>{name}</span>
         <span className={classes.card__info}>{info}</span>
         <span className={classes.card__price}>
           {inStockQuantities[selectedQuantityIndex].price}$
@@ -131,10 +102,7 @@ function ProductCard({ product }) {
               );
             })}
           </select>
-          <button
-            className={classes.card__button}
-            onClick={() => addHandler(product._id, productList)}
-          >
+          <button className={classes.card__button} onClick={addHandler}>
             Add To Cart
           </button>
         </div>

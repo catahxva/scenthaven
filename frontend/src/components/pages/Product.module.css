@@ -162,3 +162,28 @@
 .product__button__add:disabled {
   background-color: #333;
 }
+
+.product__container__notes {
+  width: 100%;
+}
+
+.product__notes__row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.product__notes__title {
+  font-size: 1.6rem;
+  display: block;
+  width: 15rem;
+  font-weight: 300;
+}
+
+.product__notes {
+  font-size: 1.8rem;
+  width: calc(100% - 17rem);
+  font-weight: 400;
+}

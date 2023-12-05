@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import classes from "../../pages/Product.module.css";
+import classes from "./ProductImages.module.css";
 
 function ProductImages({ imagesArray, name }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);

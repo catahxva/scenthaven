@@ -13,8 +13,14 @@ const reviewSchema = new mongoose.Schema(
       max: 5,
       required: [true, "The review must have a rating."],
     },
-    helpful: Number,
-    notHelpful: Number,
+    helpful: {
+      default: 0,
+      type: Number,
+    },
+    notHelpful: {
+      default: 0,
+      type: Number,
+    },
     product: {
       type: mongoose.Schema.ObjectId,
       ref: "Product",

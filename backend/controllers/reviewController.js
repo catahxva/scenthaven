@@ -57,7 +57,7 @@ exports.rateReview = async function (req, res, next) {
     const { id } = req.body;
     const { userOpinion } = req.body;
 
-    const review = Review.findById(id);
+    const review = await Review.findById(id);
 
     if (!review)
       return next(new AppError("No review found with this ID.", 404));

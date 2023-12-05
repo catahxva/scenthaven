@@ -1,0 +1,155 @@
+.product__container__info {
+  position: relative;
+}
+
+.product__btn__fave {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.product__svg__fave {
+  width: 3rem;
+  height: 3rem;
+  color: #333;
+  transition: all 0.5s;
+}
+
+.product__svg__fave__active {
+  color: #f03e3e;
+}
+
+.product__brand {
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+
+.product__title {
+  margin-bottom: 0.6rem;
+}
+
+.product__title::after {
+  content: none;
+}
+
+.product__concentration {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.product__container__rating {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.product__container__stars {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.product__star {
+  width: 4rem;
+  height: 4rem;
+}
+
+.product__star__full {
+  color: #f03e3e;
+}
+
+.product__star__empty {
+  color: #333;
+}
+
+.product__reviews__number {
+  font-size: 2.5rem;
+}
+
+.product__no__rating {
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+}
+
+.product__container__quantities {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.product__quantity {
+  width: 12rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid #333;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.product__quantity__active {
+  border: 1px solid #f03e3e;
+}
+
+.product__quantity__span {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.product__button__add {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #fff;
+  background-color: #f03e3e;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  border: none;
+  margin-bottom: 3rem;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.product__button__add:disabled {
+  background-color: #333;
+}
+
+.product__no__stock {
+  font-size: 2.2rem;
+  color: #f03e3e;
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+
+.product__container__notes {
+  width: 100%;
+}
+
+.product__notes__row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.product__notes__title {
+  font-size: 1.6rem;
+  display: block;
+  width: 15rem;
+  font-weight: 300;
+}
+
+.product__notes {
+  font-size: 1.8rem;
+  width: calc(100% - 17rem);
+  font-weight: 400;
+}

@@ -12,7 +12,9 @@ const processBrand = function (str) {
 const processInfo = function (str1, str2) {
   return `${str1.split("")[0].toUpperCase() + str1.slice(1)} ${str2
     .split(" ")
-    .map((string) => string.split("")[0].toUpperCase() + string.slice(1))
+    .map((string) =>
+      string ? string.split("")[0].toUpperCase() + string.slice(1) : string
+    )
     .join(" ")}`;
 };
 
@@ -29,8 +31,11 @@ export default function useProductData(product, defaultIndex) {
   const info = processInfo(product.gender, product.concentration);
 
   const rating = product.ratingsAverage ? true : false;
-  const ratingArr = new Array(product.ratingsAverage).fill(0);
-  const ratingDifArr = new Array(5 - product.ratingsAverage).fill(0);
+  const ratingArr = new Array(Math.round(product.ratingsAverage)).fill(0);
+  const ratingDifArr = new Array(5 - Math.round(product.ratingsAverage)).fill(
+    0
+  );
+  const ratingsNumber = product.ratingsNumber;
 
   const outOfStock = !product.quantities.some(stockCallback);
   const inStockQuantities = product.quantities.filter(stockCallback);
@@ -61,6 +66,7 @@ export default function useProductData(product, defaultIndex) {
     rating,
     ratingArr,
     ratingDifArr,
+    ratingsNumber,
     outOfStock,
     inStockQuantities,
     id,

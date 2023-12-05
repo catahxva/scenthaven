@@ -5,6 +5,8 @@ import useProductData from "../../hooks/useProductData";
 import classes from "./ProductCard.module.css";
 
 function ProductCard({ product }) {
+  console.log(product);
+
   const {
     selectedQuantityIndex,
     setSelectedQuantityIndex,
@@ -14,6 +16,7 @@ function ProductCard({ product }) {
     rating,
     ratingArr,
     ratingDifArr,
+    ratingsNumber,
     outOfStock,
     inStockQuantities,
     name,
@@ -82,7 +85,7 @@ function ProductCard({ product }) {
           <div className={classes.card__rating}>
             <span className={classes.card__no__rating}>No rating</span>
             <span className={classes.card__ratings__amount}>
-              ({product.ratingsNumber ? product.ratingsNumber : 0})
+              ({ratingsNumber})
             </span>
           </div>
         )}

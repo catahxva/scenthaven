@@ -12,8 +12,6 @@ function HomeLatest() {
     queryFn: ({ signal }) => fetchProducts({ signal, queryString }),
   });
 
-  console.log(data);
-
   let content;
 
   if (isPending) {

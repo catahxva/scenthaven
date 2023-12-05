@@ -12,8 +12,6 @@ function Navigation() {
     0
   );
 
-  console.log(useSelector((state) => state.cart.items));
-
   return (
     <div className={classes.container__nav}>
       <nav className={classes.nav}>

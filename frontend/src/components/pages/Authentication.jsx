@@ -31,7 +31,11 @@ function Authentication() {
   useEffect(() => {
     if (actionData !== undefined) {
       dispatch(
-        authActions.login({ token: actionData[0], expiration: actionData[1] })
+        authActions.login({
+          token: actionData[0],
+          expiration: actionData[1],
+          userName: actionData[2],
+        })
       );
 
       navigate("/");
@@ -132,22 +136,22 @@ export async function action({ request, params }) {
     throw json({ message: "Could not authenticate user" }, { status: 500 });
   }
 
-  const { token } = await response.json();
+  const { token, userName } = await response.json();
   const expiration = new Date();
   expiration.setDate(expiration.getDate() + 90);
 
   if (mode === "signup" || mode === "forgot") return redirect("/auth-message");
 
   if (mode === "login" && token) {
-    return [token, expiration.toISOString()];
+    return [token, expiration.toISOString(), userName];
   }
 
   if (mode === "reset" && token) {
-    return [token, expiration.toISOString()];
+    return [token, expiration.toISOString(), userName];
   }
 
   if (mode === "forgotReset" && token) {
-    return [token, expiration.toISOString()];
+    return [token, expiration.toISOString(), userName];
   }
 }
 

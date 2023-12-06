@@ -52,14 +52,30 @@ const userSchema = new mongoose.Schema(
       ],
     },
     address: {
-      name: String,
-      number: Number,
-      street: String,
-      city: String,
-      state: String,
-      postalCode: string,
-      country: String,
-      phone: String,
+      name: {
+        type: String,
+      },
+      number: {
+        type: String,
+      },
+      street: {
+        type: String,
+      },
+      city: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      postalCode: {
+        type: String,
+      },
+      country: {
+        type: String,
+      },
+      phone: {
+        type: String,
+      },
     },
   },
   {

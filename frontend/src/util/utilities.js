@@ -74,6 +74,18 @@ export const rateReviewFn = async function ({ userOpinion, id }) {
   if (!response.ok) throw new Error(`Could not send request`);
 };
 
+export const changeFavorites = async function ({ token, id }) {
+  const response = await fetch(`http://localhost:3000/favorites/change-favs`, {
+    method: "POST",
+    body: JSON.stringify({ token, id }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) throw new Error(`Couldn't update your favorite products`);
+};
+
 export function calculateRatingPercentages(reviews) {
   const ratingCounts = {};
 

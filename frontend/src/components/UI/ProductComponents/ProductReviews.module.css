@@ -18,3 +18,14 @@
   flex-direction: column;
   align-items: center;
 }
+
+.product__reviews__more {
+  font-size: 1.8rem;
+  padding: 0.8rem 1.2rem;
+  text-transform: capitalize;
+  background-color: #333;
+  border-radius: 1rem;
+  color: #fff;
+  font-family: inherit;
+  cursor: pointer;
+}

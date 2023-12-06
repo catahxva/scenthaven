@@ -1,5 +1,8 @@
 import classes from "./Authentication.module.css";
 
+import AuthForm from "../UI/AuthenticationComponents/AuthForm";
+import AuthPromo from "../UI/AuthenticationComponents/AuthPromo";
+
 import { useEffect } from "react";
 
 import {
@@ -19,11 +22,11 @@ import { authActions } from "../../store/authSlice";
 function Authentication() {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
-  console.log(isAuth);
-
   const actionData = useActionData();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  console.log(actionData);
 
   useEffect(() => {
     if (actionData !== undefined) {
@@ -34,10 +37,6 @@ function Authentication() {
       navigate("/");
     }
   }, [actionData]);
-
-  // const loginHandler = function () {
-  //   submit(null, { method: "post" });
-  // };
 
   const [searchParams] = useSearchParams();
   const navigation = useNavigation();
@@ -78,149 +77,18 @@ function Authentication() {
 
   return (
     <section className={classes.auth__grid}>
-      <div className={classes.auth__container}>
-        {isSignup && <h2>Signup</h2>}
-        {isLogin && <h2>Login</h2>}
-        {isForgot && <h2>Forgot</h2>}
-        {(isForgotReset || isReset) && <h2>Reset</h2>}
-        {isForgot && (
-          <p>
-            Send your email and you will receive a link which you can use to
-            reset your password.
-          </p>
-        )}
-        <Form method="post" className={classes.auth__form}>
-          {isSignup && (
-            <div className={classes.auth__form__group}>
-              <label className={classes.auth__form__label} htmlFor="username">
-                Username
-              </label>
-              <input
-                className={classes.auth__form__input}
-                type="text"
-                name="userName"
-                id="userName"
-                required
-              />
-            </div>
-          )}
-          {(isSignup || isLogin || isForgot) && (
-            <div className={classes.auth__form__group}>
-              <label className={classes.auth__form__label} htmlFor="email">
-                Email
-              </label>
-              <input
-                className={classes.auth__form__input}
-                type="text"
-                name="email"
-                id="email"
-                required
-              />
-            </div>
-          )}
-          {(isSignup || isLogin || isReset) && (
-            <div className={classes.auth__form__group}>
-              <label className={classes.auth__form__label} htmlFor="password">
-                Password
-              </label>
-              <input
-                className={classes.auth__form__input}
-                type="password"
-                name="password"
-                id="password"
-                required
-              />
-            </div>
-          )}
-          {isSignup && (
-            <div className={classes.auth__form__group}>
-              <label
-                className={classes.auth__form__label}
-                htmlFor="passwordConfirm"
-              >
-                Confirm password
-              </label>
-              <input
-                className={classes.auth__form__input}
-                type="password"
-                name="passwordConfirm"
-                id="passwordConfirm"
-                required
-              />
-            </div>
-          )}
-          {(isReset || isForgotReset) && (
-            <div className={classes.auth__form__group}>
-              <label
-                className={classes.auth__form__label}
-                htmlFor="newPassword"
-              >
-                New password
-              </label>
-              <input
-                className={classes.auth__form__input}
-                type="password"
-                name="newPassword"
-                id="newPassword"
-                required
-              />
-            </div>
-          )}
-          {(isReset || isForgotReset) && (
-            <div className={classes.auth__form__group}>
-              <label
-                className={classes.auth__form__label}
-                htmlFor="confirmNewPassword"
-              >
-                Confirm new password
-              </label>
-              <input
-                className={classes.auth__form__input}
-                type="password"
-                name="newPasswordConfirm"
-                id="newPasswordConfirm"
-                required
-              />
-            </div>
-          )}
-          <div className={classes.auth__form__container__btns}>
-            <button disabled={isSubmitting} className={classes.auth__form__btn}>
-              {!isSubmitting ? buttonText : "Submitting..."}
-            </button>
-            <Link to={linkAddress} className={classes.auth__link}>
-              {linkText}
-            </Link>
-          </div>
-        </Form>
-      </div>
-      <div className={classes.auth__promo}>
-        <h3 className={classes.auth__promo__title}>Welcome to Scent Haven</h3>
-        <p>
-          Your aromatic oasis for indulging in a world of captivating
-          fragrances! At Scent Haven, we curate a diverse collection of premium
-          perfumes, ensuring there's a perfect scent for every mood. Register
-          today for a streamlined checkout experience and access to a
-          personalized dashboard, where you can conveniently track previous
-          orders and keep your favorite scents at your fingertips.
-        </p>
-        <p>
-          Experience the convenience of registering at Scent Haven. Unlock a
-          streamlined checkout process with securely stored delivery details for
-          quick and efficient shopping. Registering also lets you create a wish
-          list, making it easy to bookmark and revisit your favorite fragrances.
-          Elevate your shopping experience by joining our exclusive community
-          that values your choices and preferences. Register today for a scented
-          adventure tailored just for you!
-        </p>
-        <p>
-          Scent Haven – where fragrance meets convenience! Register now for
-          streamlined checkout and easy access to a personalized dashboard.
-          Track your orders effortlessly, store your preferred address securely,
-          and create a wish list to bookmark and revisit your favorite scents.
-          Join our exclusive community that values your choices – register today
-          for a tailored and convenient shopping experience.
-        </p>
-      </div>
+      <AuthForm
+        isSignup={isSignup}
+        isLogin={isLogin}
+        isForgot={isForgot}
+        isForgotReset={isForgotReset}
+        isReset={isReset}
+        isSubmitting={isSubmitting}
+        linkAddress={linkAddress}
+        linkText={linkText}
+        buttonText={buttonText}
+      />
+      <AuthPromo />
     </section>
   );
 }
@@ -260,13 +128,7 @@ export async function action({ request, params }) {
     body: JSON.stringify(data),
   });
 
-  if (response.status === 400) {
-    // console.log(await response.json());
-    return response;
-  }
-
   if (!response.ok) {
-    console.log(await response.json());
     throw json({ message: "Could not authenticate user" }, { status: 500 });
   }
 
@@ -283,8 +145,6 @@ export async function action({ request, params }) {
   if (mode === "reset" && token) {
     return [token, expiration.toISOString()];
   }
-
-  if (mode === "forgotReset" && !token) console.log(token);
 
   if (mode === "forgotReset" && token) {
     return [token, expiration.toISOString()];

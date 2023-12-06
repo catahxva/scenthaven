@@ -28,8 +28,6 @@ const createSendToken = (user, statusCode, res) => {
 
 exports.signUp = async function (req, res, next) {
   try {
-    console.log(req.body);
-
     const newUser = await User.create({
       userName: req.body.userName,
       email: req.body.email,
@@ -60,13 +58,8 @@ exports.signUp = async function (req, res, next) {
 
 exports.verifyEmail = async function (req, res, next) {
   try {
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(req.body.token)
-      .digest("hex");
-
     const user = await User.findOne({
-      verifyEmailToken: hashedToken,
+      verifyEmailToken: req.body.token,
     });
 
     if (!user) return next(new AppError("No user found.", 404));
@@ -86,6 +79,8 @@ exports.verifyEmail = async function (req, res, next) {
 exports.login = async function (req, res, next) {
   try {
     const { email, password } = req.body;
+
+    console.log(req.body);
 
     if (!email || !password)
       return next(
@@ -136,32 +131,49 @@ exports.forgotPassword = async function (req, res, next) {
   }
 };
 
-exports.resetPassword = async function (req, res, next) {
+exports.resetForgotPassword = async function (req, res, next) {
   try {
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(req.body.token)
-      .digest("hex");
-
     const user = await User.findOne({
-      passwordResetToken: hashedToken,
+      passwordResetToken: req.body.token,
       passwordResetExpires: { $gt: Date.now() },
     });
 
     if (!user)
       return next(new AppError("Token is invalid or it has expired.", 400));
 
-    user.password = req.body.password;
-    user.passwordConfirm = req.body.passwordConfirm;
+    user.password = req.body.newPassword;
+    user.passwordConfirm = req.body.newPasswordConfirm;
 
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
 
-    await user.save();
+    await user.save({ validateBeforeSave: false });
 
-    res.status(200).json({
-      status: "success",
-    });
+    createSendToken(user, 200, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.resetPassword = async function (req, res, next) {
+  try {
+    const user = req.user;
+
+    console.log(user);
+
+    if (
+      !user ||
+      !(await user.correctPassword(req.body.password, user.password))
+    ) {
+      return next(new AppError(`Invalid email or password`, 400));
+    }
+
+    user.password = req.body.newPassword;
+    user.passwordConfirm = req.body.newPasswordConfirm;
+
+    await user.save({ validateBeforeSave: false });
+
+    createSendToken(user, 200, res);
   } catch (err) {
     next(err);
   }
@@ -175,9 +187,9 @@ exports.isLoggedIn = async function (req, res, next) {
         process.env.JWT_SECRET
       );
 
-      const currentUser = await User.findById(decoded.id);
+      const currentUser = await User.findById(decoded.id).select("+password");
 
-      if (!currentUser) return next();
+      if (!currentUser) return next(new AppError(`No user found`, 400));
 
       if (currentUser.changedPasswordAfter(decoded.iat))
         return next(

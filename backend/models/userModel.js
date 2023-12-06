@@ -51,6 +51,16 @@ const userSchema = new mongoose.Schema(
         },
       ],
     },
+    address: {
+      name: String,
+      number: Number,
+      street: String,
+      city: String,
+      state: String,
+      postalCode: string,
+      country: String,
+      phone: String,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -81,6 +91,7 @@ userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
+  console.log(candidatePassword, userPassword);
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
@@ -100,10 +111,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString("hex");
 
-  this.passwordResetToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
+  this.passwordResetToken = resetToken;
 
   this.passwordResetExpires = Date.now() + 24 * 60 * 60 * 1000;
 
@@ -113,10 +121,7 @@ userSchema.methods.createPasswordResetToken = function () {
 userSchema.methods.createEmailVerificationToken = function () {
   const verifyToken = crypto.randomBytes(32).toString("hex");
 
-  this.verifyEmailToken = crypto
-    .createHash("sha256")
-    .update(verifyToken)
-    .digest("hex");
+  this.verifyEmailToken = verifyToken;
 
   return verifyToken;
 };

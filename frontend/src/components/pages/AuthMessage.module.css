@@ -10,6 +10,7 @@
 
 .auth__message__text {
   font-size: 2.4rem;
+  text-transform: none;
 }
 
 .auth__message__text::after {

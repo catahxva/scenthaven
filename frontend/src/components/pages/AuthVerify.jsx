@@ -1,18 +1,30 @@
 import { useEffect } from "react";
 
-import { useActionData, useSubmit } from "react-router-dom";
+import { useActionData, useSubmit, json, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { authActions } from "../../store/authSlice";
 
 import classes from "./AuthVerify.module.css";
 
 function AuthVerify() {
-  const data = useActionData();
+  const actionData = useActionData();
   const submit = useSubmit();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    submit(null, { method: "post" });
-  }, []);
+    if (actionData === undefined) {
+      submit(null, { method: "post" });
+    }
+
+    if (actionData !== undefined) {
+      dispatch(
+        authActions.login({ token: actionData[0], expiration: actionData[1] })
+      );
+
+      navigate("/");
+    }
+  }, [actionData]);
 
   let content;
 
@@ -41,12 +53,21 @@ export async function action({ params }) {
   const res = await response.json();
 
   if (!response.ok) {
-    console.log(res);
+    throw json(
+      {
+        message:
+          "There has been a problem with verifying your email, try again later.",
+      },
+      { status: 500 }
+    );
   }
 
-  console.log(res);
+  const { token: userToken } = res;
 
-  return null;
+  const expiration = new Date();
+  expiration.setDate(expiration.getDate() + 90);
+
+  return [userToken, expiration.toISOString()];
 }
 
 export default AuthVerify;

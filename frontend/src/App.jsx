@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         loader: productLoader,
       },
       {
-        path: "/auth",
+        path: "/auth/:token?",
         element: <Authentication />,
         action: authAction,
       },

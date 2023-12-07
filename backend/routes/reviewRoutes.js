@@ -10,7 +10,7 @@ router.get("/:id", reviewController.getReviews);
 router.post(
   "/upload-review",
   authController.protect,
-  // reviewController.verifyExistingReview,
+  reviewController.verifyExistingReview,
   reviewController.createReview
 );
 

@@ -34,20 +34,13 @@ export default function useProductData(product, defaultIndex) {
   const brand = processBrand(product.brand);
   const info = processInfo(product.gender, product.concentration);
 
-  const rating = product.ratingsAverage ? true : false;
   const ratingArr = new Array(Math.round(product.ratingsAverage)).fill(0);
   const ratingDifArr = new Array(5 - Math.round(product.ratingsAverage)).fill(
     0
   );
-  const ratingsNumber = product.ratingsNumber;
 
   const outOfStock = !product.quantities.some(stockCallback);
   const inStockQuantities = product.quantities.filter(stockCallback);
-
-  const id = product._id;
-  const name = product.name;
-  const description = product.description;
-  const notes = product.notes;
 
   const addHandler = function () {
     const productObject = {
@@ -71,15 +64,15 @@ export default function useProductData(product, defaultIndex) {
     dispatch,
     brand,
     info,
-    rating,
+    rating: product.ratingsAverage ? true : false,
     ratingArr,
     ratingDifArr,
-    ratingsNumber,
+    ratingsNumber: product.ratingsNumber,
     outOfStock,
     inStockQuantities,
-    id,
-    name,
-    description,
-    notes,
+    id: product._id,
+    name: product.name,
+    description: product.description,
+    notes: product.notes,
   };
 }

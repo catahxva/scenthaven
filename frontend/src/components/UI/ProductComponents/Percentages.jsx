@@ -1,6 +1,13 @@
 import classes from "./Percentages.module.css";
 
+import { useRef } from "react";
+
+import AddReviewBtn from "./AddReviewBtn";
+import AddReview from "./AddReview";
+
 function Percentages({ rating, percentages }) {
+  const dialog = useRef();
+
   const percentagesArray = Object.entries(percentages).sort((a, b) => {
     const numA = Number(a[0]);
     const numB = Number(b[0]);
@@ -8,11 +15,16 @@ function Percentages({ rating, percentages }) {
     return numB - numA;
   });
 
+  const openDialog = function () {
+    dialog.current.open();
+  };
+
   return (
     <>
       <div className={classes.product__container__reviews__rating}>
         <span className={classes.product__rating}>{rating}/5</span>
-        <button className={classes.product__add__review}>Add review</button>
+        <AddReviewBtn onClick={openDialog} />
+        <AddReview ref={dialog} />
       </div>
       <div className={classes.product__rating__percentages}>
         {percentagesArray.map((entry) => {

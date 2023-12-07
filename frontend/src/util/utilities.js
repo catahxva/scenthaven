@@ -62,6 +62,29 @@ export const fetchReviews = async function ({ signal, id }) {
   return data;
 };
 
+export const sendReview = async function ({ token, review, rating, id }) {
+  if (!token) throw new Error("You must be logged in to perform this action");
+  if (!review) throw new Error("You must provide a review");
+  if (!rating) throw new Error("You must provide a rating");
+  const dataToSend = {
+    review,
+    rating,
+    product: id,
+  };
+
+  const response = await fetch(`http://localhost:3000/reviews/upload-review`, {
+    body: JSON.stringify(dataToSend),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const resData = await response.json();
+
+  if (!response.ok) throw new Error(resData.message);
+};
+
 export const rateReviewFn = async function ({ userOpinion, id }) {
   const response = await fetch(`http://localhost:3000/reviews/rate-review`, {
     method: "POST",

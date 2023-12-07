@@ -1,11 +1,7 @@
 import classes from "./Product.module.css";
 
-import SwiperElement from "../UI/SwiperElement";
 import ProductImages from "../UI/ProductComponents/ProductImages";
 import ProductInfo from "../UI/ProductComponents/ProductInfo";
-import ProductReviews from "../UI/ProductComponents/ProductReviews";
-import ProductNoReviews from "../UI/ProductComponents/ProductNoReviews";
-import Placeholder from "../UI/Placeholder";
 
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -13,6 +9,24 @@ import { queryClient, fetchOneProduct } from "../../util/utilities";
 
 import { fetchReviews, fetchProducts } from "../../util/utilities";
 import useGetData from "../../hooks/useGetData";
+
+import { createContext } from "react";
+
+export const ProductIdContext = createContext({
+  id: "",
+});
+
+const ProductIdContextProvider = function ({ children, id }) {
+  const contextValue = {
+    id,
+  };
+
+  return (
+    <ProductIdContext.Provider value={contextValue}>
+      {children}
+    </ProductIdContext.Provider>
+  );
+};
 
 function Product() {
   const { id } = useParams();
@@ -44,7 +58,7 @@ function Product() {
           <ProductImages imagesArray={product.images} name={product.name} />
           <ProductInfo product={product} />
         </div>
-        {reviewsContent}
+        <ProductIdContextProvider>{reviewsContent}</ProductIdContextProvider>
       </section>
       <section>
         <h2>From the same brand</h2>

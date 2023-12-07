@@ -93,7 +93,7 @@ function ProductInfo({ product }) {
       dispatch(
         uiActions.showNotification({
           status: "success",
-          message: "Product added to favorites",
+          message: "Modified your favorite products",
         })
       );
 

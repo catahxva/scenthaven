@@ -1,0 +1,112 @@
+.product__review__modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50rem;
+  height: 45rem;
+  padding: 2rem;
+  border-radius: 2rem;
+  border: none;
+  z-index: 10;
+}
+
+.product__form__group {
+  margin-bottom: 3rem;
+}
+
+.product__review__label {
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+  display: block;
+  font-family: inherit;
+}
+
+.product__review__container__rating {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.product__review__container__stars {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.product__review__container__stars:hover .product__review__modal__svg {
+  color: #f03e3e;
+}
+
+.product__review__container__stars__active .product__review__modal__svg {
+  color: #f03e3e;
+}
+
+.product__review__container__stars__disabled {
+  pointer-events: none;
+}
+
+.product__review__modal__svg {
+  width: 3.5rem;
+  height: 3.5rem;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.product__review__modal__svg:hover,
+.product__review__modal__svg:hover ~ .product__review__modal__svg {
+  color: #333;
+}
+
+.product__review__modal__svg__active {
+  color: #f03e3e;
+  z-index: 999;
+}
+
+.product__review__modal__svg__active ~ .product__review__modal__svg {
+  color: #333;
+}
+
+.product__review__modal__svg__disabled {
+  pointer-events: none;
+}
+
+.product__review__button {
+  font-family: inherit;
+  font-size: 1.6rem;
+  background-color: #333;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+}
+
+.product__review__button__send {
+  background-color: #f03e3e;
+}
+
+.product__review__textarea {
+  width: 100%;
+  height: 20rem;
+  border-radius: 1rem;
+  font-family: inherit;
+  color: #333;
+  padding: 1rem;
+  font-size: 1.6rem;
+  resize: none;
+  border: 0.5px solid #333;
+}
+
+.product__review__textarea:focus {
+  outline: none;
+  border: 0.5px solid #f03e3e;
+}
+
+.product__form__group__btns {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}

@@ -7,7 +7,7 @@ import { calculateRatingPercentages } from "../../../util/utilities";
 import Review from "./Review";
 import Percentages from "./Percentages";
 
-function ProductReviews({ reviews, rating }) {
+function ProductReviews({ reviews, rating, id }) {
   const [amountOfReviews, setAmountOfReviews] = useState(3);
 
   const visibleReviews = reviews.slice(0, amountOfReviews);
@@ -17,7 +17,7 @@ function ProductReviews({ reviews, rating }) {
   return (
     <div className={classes.product__reviews}>
       <div className={classes.product__container__all__ratings}>
-        <Percentages rating={rating} percentages={percentages} />
+        <Percentages rating={rating} percentages={percentages} id={id} />
       </div>
       <div className={classes.product__all__reviews}>
         {visibleReviews.map((review) => {

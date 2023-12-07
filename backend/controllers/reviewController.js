@@ -3,7 +3,9 @@ const AppError = require("../util/appError");
 
 exports.getReviews = async function (req, res, next) {
   try {
-    const reviews = await Review.find({ product: req.params.id });
+    const reviews = await Review.find({ product: req.params.id }).sort({
+      timeStamp: -1,
+    });
 
     res.status(200).json({
       status: "success",
@@ -37,7 +39,9 @@ exports.verifyExistingReview = async function (req, res, next) {
 exports.createReview = async function (req, res, next) {
   try {
     const newReview = await Review.create({
-      ...req.body,
+      review: req.body.review,
+      rating: req.body.rating,
+      product: req.body.id,
       user: req.user._id,
     });
 

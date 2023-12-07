@@ -24,6 +24,10 @@ export default function useProductData(product, defaultIndex) {
   const [selectedQuantityIndex, setSelectedQuantityIndex] =
     useState(defaultIndex);
 
+  const [productFavorite, setProductFavorite] = useState(false);
+
+  const [productFavoriteLoading, setProductFavoriteLoading] = useState(false);
+
   const productsList = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
@@ -58,6 +62,10 @@ export default function useProductData(product, defaultIndex) {
   return {
     selectedQuantityIndex,
     setSelectedQuantityIndex,
+    productFavorite,
+    setProductFavorite,
+    productFavoriteLoading,
+    setProductFavoriteLoading,
     addHandler,
     productsList,
     dispatch,

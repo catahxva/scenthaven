@@ -5,8 +5,6 @@ import "swiper/css/bundle";
 import ProductCard from "./ProductCard";
 
 function SwiperElement({ data }) {
-  console.log(data);
-
   return (
     <Swiper
       modules={[Navigation, Keyboard, A11y]}

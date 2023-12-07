@@ -5,6 +5,8 @@ const favoritesController = require("../controllers/favoritesController");
 
 const router = express.Router();
 
+router.get("/", authController.protect, favoritesController.getFavorites);
+
 router.post(
   "/change-favs",
   authController.protect,

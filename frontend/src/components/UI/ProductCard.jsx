@@ -5,8 +5,6 @@ import useProductData from "../../hooks/useProductData";
 import classes from "./ProductCard.module.css";
 
 function ProductCard({ product }) {
-  console.log(product);
-
   const {
     selectedQuantityIndex,
     setSelectedQuantityIndex,

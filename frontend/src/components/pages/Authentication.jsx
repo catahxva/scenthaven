@@ -136,22 +136,22 @@ export async function action({ request, params }) {
     throw json({ message: "Could not authenticate user" }, { status: 500 });
   }
 
-  const { token, userName } = await response.json();
+  const { token, username } = await response.json();
   const expiration = new Date();
   expiration.setDate(expiration.getDate() + 90);
 
   if (mode === "signup" || mode === "forgot") return redirect("/auth-message");
 
   if (mode === "login" && token) {
-    return [token, expiration.toISOString(), userName];
+    return [token, expiration.toISOString(), username];
   }
 
   if (mode === "reset" && token) {
-    return [token, expiration.toISOString(), userName];
+    return [token, expiration.toISOString(), username];
   }
 
   if (mode === "forgotReset" && token) {
-    return [token, expiration.toISOString(), userName];
+    return [token, expiration.toISOString(), username];
   }
 }
 

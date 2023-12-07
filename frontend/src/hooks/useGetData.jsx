@@ -13,8 +13,6 @@ export default function useGetData({
   dataType,
   rating,
 }) {
-  console.log(id, queryString);
-
   const { data, isPending, isError, error } = useQuery({
     queryKey: key,
     queryFn: ({ signal }) => {

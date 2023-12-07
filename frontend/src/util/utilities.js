@@ -75,15 +75,41 @@ export const rateReviewFn = async function ({ userOpinion, id }) {
 };
 
 export const changeFavorites = async function ({ token, id }) {
+  if (!token) throw new Error("You must register to perform this action");
+
   const response = await fetch(`http://localhost:3000/favorites/change-favs`, {
     method: "POST",
-    body: JSON.stringify({ token, id }),
+    body: JSON.stringify({ productId: id }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 
-  if (!response.ok) throw new Error(`Couldn't update your favorite products`);
+  if (!response.ok) {
+    console.log(await response.json());
+    throw new Error(`Couldn't update your favorite products`);
+  }
+};
+
+export const getFavorites = async function ({ signal, token }) {
+  if (!token) throw new Error("You must regist to see your favorites");
+
+  const response = await fetch(`http://localhost:3000/favorites`, {
+    signal,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Could not get your favorite products");
+  }
+
+  const data = await response.json();
+
+  return data;
 };
 
 export function calculateRatingPercentages(reviews) {

@@ -10,8 +10,6 @@ import Percentages from "./Percentages";
 function ProductReviews({ reviews, rating }) {
   const [amountOfReviews, setAmountOfReviews] = useState(3);
 
-  console.log(reviews);
-
   const visibleReviews = reviews.slice(0, amountOfReviews);
 
   const percentages = calculateRatingPercentages(reviews);

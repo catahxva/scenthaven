@@ -62,12 +62,12 @@ export async function action({ params }) {
     );
   }
 
-  const { token: userToken } = res;
+  const { token: userToken, username } = res;
 
   const expiration = new Date();
   expiration.setDate(expiration.getDate() + 90);
 
-  return [userToken, expiration.toISOString()];
+  return [userToken, expiration.toISOString(), username];
 }
 
 export default AuthVerify;

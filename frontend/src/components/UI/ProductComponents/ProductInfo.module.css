@@ -22,6 +22,22 @@
   color: #f03e3e;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.product__svg__loading {
+  width: 3rem;
+  height: 3rem;
+  color: #333;
+  animation: spin infinite 2s linear;
+}
+
 .product__brand {
   font-size: 1.8rem;
   font-weight: 300;

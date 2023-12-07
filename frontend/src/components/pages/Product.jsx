@@ -22,7 +22,6 @@ function Product() {
     queryFn: ({ signal }) => fetchOneProduct({ signal, id }),
   });
   const product = data.data.data;
-  console.log(product);
 
   const { content: reviewsContent } = useGetData({
     key: ["reviews", id],

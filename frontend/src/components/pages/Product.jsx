@@ -58,7 +58,9 @@ function Product() {
           <ProductImages imagesArray={product.images} name={product.name} />
           <ProductInfo product={product} />
         </div>
-        <ProductIdContextProvider>{reviewsContent}</ProductIdContextProvider>
+        <ProductIdContextProvider id={id}>
+          {reviewsContent}
+        </ProductIdContextProvider>
       </section>
       <section>
         <h2>From the same brand</h2>

@@ -22,7 +22,7 @@ exports.verifyExistingReview = async function (req, res, next) {
   try {
     const review = await Review.find({
       user: req.user,
-      product: req.body.product,
+      product: req.body.id,
     });
 
     if (review.length > 0)

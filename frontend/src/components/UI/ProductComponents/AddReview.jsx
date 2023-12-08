@@ -7,26 +7,83 @@ import {
   useState,
   useContext,
 } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { queryClient, sendReview } from "../../../util/utilities";
 import { useMutation } from "@tanstack/react-query";
-
-import { uiActions } from "../../../store/uiSlice";
 
 import { ProductIdContext } from "../../pages/Product";
 
 const AddReview = forwardRef(function (props, ref) {
   const token = useSelector((state) => state.auth.token);
-  const dispatch = useDispatch();
   const ctx = useContext(ProductIdContext);
 
   const dialogRef = useRef();
-  const [isRatingActive, setIsRatingActive] = useState(false);
+
   const [activeIndex, setActiveIndex] = useState(null);
+  const isRatingActive = activeIndex === null ? false : true;
+
   const [textareaState, setTextareaState] = useState("");
   const [buttonText, setButtonText] = useState("Send");
+
   const [contentState, setContentState] = useState("normal");
   const [error, setError] = useState("");
+
+  const arr = new Array(5).fill(0);
+
+  const { mutate } = useMutation({
+    mutationFn: sendReview,
+    onMutate() {
+      setButtonText("Submitting");
+    },
+    onSuccess() {
+      setTextareaState("");
+      setActiveIndex(null);
+      setContentState("success");
+    },
+    onError(error) {
+      setError(error);
+      setContentState("error");
+    },
+    onSettled() {
+      setButtonText("Send");
+    },
+  });
+
+  useImperativeHandle(ref, () => {
+    return {
+      open() {
+        dialogRef.current.showModal();
+      },
+    };
+  });
+
+  const ratingClickHandler = function (i) {
+    setActiveIndex(i);
+  };
+
+  const ratingResetHandler = function () {
+    setActiveIndex(null);
+  };
+
+  const changeHandler = function (e) {
+    setTextareaState(e.target.value);
+  };
+
+  const closeModalHandler = function () {
+    dialogRef.current.close();
+    setContentState("normal");
+  };
+
+  const sendReviewHandler = function (e) {
+    e.preventDefault(e);
+
+    mutate({
+      token,
+      id: ctx.id,
+      rating: activeIndex + 1,
+      review: textareaState,
+    });
+  };
 
   let content;
 
@@ -117,8 +174,10 @@ const AddReview = forwardRef(function (props, ref) {
 
   if (contentState === "error") {
     content = (
-      <div className={classes.product__modal__error}>
-        <h3 className={classes.product__title__error}>{error.message}</h3>
+      <div
+        className={`${classes.product__modal__message} ${classes.product__modal__error}`}
+      >
+        <h3 className={classes.product__title__message}>{error.message}</h3>
         <div className={classes.product__btn__holder}>
           <button
             type="button"
@@ -132,60 +191,26 @@ const AddReview = forwardRef(function (props, ref) {
     );
   }
 
-  const { mutate } = useMutation({
-    queryFn: sendReview,
-    onMutate() {
-      setButtonText("Submitting");
-    },
-    onSuccess() {
-      setButtonText("Sent!");
-      setTextareaState("");
-      setIsRatingActive(false);
-      setActiveIndex(null);
-    },
-    onError(error) {
-      setButtonText("Failed");
-    },
-  });
-
-  useImperativeHandle(ref, () => {
-    return {
-      open() {
-        dialogRef.current.showModal();
-      },
-    };
-  });
-
-  const arr = new Array(5).fill(0);
-
-  const ratingClickHandler = function (i) {
-    setIsRatingActive(true);
-    setActiveIndex(i);
-  };
-
-  const ratingResetHandler = function () {
-    setIsRatingActive(false);
-    setActiveIndex(null);
-  };
-
-  const changeHandler = function (e) {
-    setTextareaState(e.target.value);
-  };
-
-  const closeModalHandler = function () {
-    dialog.current.close();
-  };
-
-  const sendReviewHandler = function (e) {
-    e.preventDefault(e);
-
-    mutate({
-      token,
-      id: ctx.id,
-      rating: activeIndex + 1,
-      review: textareaState,
-    });
-  };
+  if (contentState === "success") {
+    content = (
+      <div
+        className={`${classes.product__modal__message} ${classes.product__modal__success}`}
+      >
+        <h3 className={classes.product__title__message}>
+          Thank you for the review! It will soon be posted to the website!
+        </h3>
+        <div className={classes.product__btn__holder}>
+          <button
+            type="button"
+            onClick={closeModalHandler}
+            className={classes.product__review__button}
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <dialog ref={dialogRef} className={classes.product__review__modal}>

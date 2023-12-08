@@ -4,7 +4,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 50rem;
-  height: 45rem;
+  /* height: auto; */
   padding: 2rem;
   border-radius: 2rem;
   border: none;
@@ -109,4 +109,37 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+}
+
+.product__modal__message {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6rem;
+  padding: 1rem;
+  width: 100%;
+  height: 30rem;
+  border-radius: 1rem;
+}
+
+.product__modal__error {
+  background-color: #ffc9c9;
+}
+
+.product__modal__success {
+  background-color: #8ce99a;
+}
+
+.product__title__message {
+  font-size: 2rem;
+  text-transform: none;
+  color: #333;
+}
+
+.product__btn__holder {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

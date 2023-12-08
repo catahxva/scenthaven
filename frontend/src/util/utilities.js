@@ -69,10 +69,11 @@ export const sendReview = async function ({ token, review, rating, id }) {
   const dataToSend = {
     review,
     rating,
-    product: id,
+    id,
   };
 
   const response = await fetch(`http://localhost:3000/reviews/upload-review`, {
+    method: "POST",
     body: JSON.stringify(dataToSend),
     headers: {
       "Content-Type": "application/json",

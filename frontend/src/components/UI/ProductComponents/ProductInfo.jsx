@@ -107,7 +107,6 @@ function ProductInfo({ product }) {
   });
 
   const updateFavorites = function (id) {
-    console.log("works?");
     mutate({ token, id });
   };
 

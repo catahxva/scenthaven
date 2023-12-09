@@ -1,0 +1,36 @@
+.account__data {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 20rem;
+}
+
+.account__data__title {
+  font-size: 2.4rem;
+  color: #333;
+  text-transform: none;
+  margin-bottom: 1rem;
+}
+
+.account__span {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.account__link:link,
+.account__link:visited {
+  font-size: 1.8rem;
+  color: #f03e3e;
+}
+
+.account__address__btn {
+  font-size: 1.6rem;
+  font-family: inherit;
+  padding: 0.6rem 1rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  cursor: pointer;
+}

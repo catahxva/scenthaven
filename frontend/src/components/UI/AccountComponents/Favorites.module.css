@@ -1,0 +1,16 @@
+.account__favorites {
+  width: 100%;
+}
+
+.account__favorites__span {
+  font-size: 2rem;
+}
+
+.account__favorites__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  column-gap: 4rem;
+  row-gap: 4rem;
+}

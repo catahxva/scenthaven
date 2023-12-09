@@ -1,15 +1,25 @@
 import { Link } from "react-router-dom";
 
+import { useState } from "react";
 import useProductData from "../../hooks/useProductData";
+import { useSelector } from "react-redux";
+import { uiActions } from "../../store/uiSlice";
+import { useMutation } from "@tanstack/react-query";
+import { changeFavorites, queryClient } from "../../util/utilities";
 
 import classes from "./ProductCard.module.css";
 
-function ProductCard({ product }) {
+function ProductCard({ product, type }) {
+  const token = useSelector((state) => state.auth.token);
+  const [faveBtnText, setFaveBtnText] = useState("Remove");
+
   const {
     selectedQuantityIndex,
     setSelectedQuantityIndex,
     addHandler,
+    dispatch,
     brand,
+    id,
     info,
     rating,
     ratingArr,
@@ -24,8 +34,42 @@ function ProductCard({ product }) {
     setSelectedQuantityIndex(e.target.value);
   };
 
+  const { mutate } = useMutation({
+    mutationFn: changeFavorites,
+    onMutate() {
+      setFaveBtnText("Loading...");
+    },
+    onError(error) {
+      setFaveBtnText("Failed");
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
+
+      setTimeout(() => {
+        setFaveBtnText("Remove");
+        dispatch(uiActions.hideNotification());
+      });
+    },
+    onSuccess() {
+      queryClient.invalidateQueries([`userFavorites`, token]);
+    },
+  });
+
+  const removeFavHandler = function (id) {
+    mutate({ token, id });
+  };
+
+  let additionalClass;
+
+  if (type === "favorite") additionalClass = classes.card__fave;
+
+  if (type === "slider") additionalClass = classes.card__slider;
+
   return (
-    <div className={classes.card}>
+    <div className={`${classes.card} ${additionalClass}`}>
       <Link to={`/products/${product._id}`} className={classes.card__link}>
         <div className={classes.container__image}>
           <img src={product.imageCover} className={classes.card__image} />
@@ -115,6 +159,16 @@ function ProductCard({ product }) {
           </div>
           <Link className={classes.card__overlay}></Link>
         </>
+      )}
+      {type === "favorite" && (
+        <div className={classes.card__holder__remove__fav}>
+          <button
+            onClick={() => removeFavHandler(id)}
+            className={classes.card__remove__fav}
+          >
+            {faveBtnText}
+          </button>
+        </div>
       )}
     </div>
   );

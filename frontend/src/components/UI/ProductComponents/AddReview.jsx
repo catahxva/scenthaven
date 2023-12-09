@@ -71,6 +71,7 @@ const AddReview = forwardRef(function (props, ref) {
 
   const closeModalHandler = function () {
     dialogRef.current.close();
+    queryClient.invalidateQueries(["reviews", ctx.id]);
     setContentState("normal");
   };
 

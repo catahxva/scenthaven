@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import classes from "./Navigation.module.css";
 
 function Navigation() {
+  const username = useSelector((state) => state.auth.userName);
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   const numberOfItems = useSelector((state) => state.cart.items).reduce(
@@ -73,7 +74,7 @@ function Navigation() {
             </>
           )}
           {isAuth && (
-            <Link>
+            <Link to={`/account/${username}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

@@ -1,0 +1,8 @@
+.account__section {
+  padding-top: 12rem;
+  min-height: 100vh;
+}
+
+.account__title {
+  text-transform: none;
+}

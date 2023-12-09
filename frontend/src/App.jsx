@@ -12,6 +12,7 @@ import AuthMessage from "./components/pages/AuthMessage";
 import AuthVerify, {
   action as authVerifyAction,
 } from "./components/pages/AuthVerify";
+import Account from "./components/pages/Account";
 
 import { queryClient } from "./util/utilities";
 
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
         path: "/auth-verify/:token",
         element: <AuthVerify />,
         action: authVerifyAction,
+      },
+      {
+        path: "/account/:username",
+        element: <Account />,
       },
     ],
   },

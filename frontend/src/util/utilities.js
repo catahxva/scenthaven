@@ -136,6 +136,72 @@ export const getFavorites = async function ({ signal, token }) {
   return data;
 };
 
+export const getUserAccount = async function ({ signal, token }) {
+  if (!token) throw new Error(`You must be logged in to perform this action`);
+
+  const response = await fetch(`http://localhost:3000/user/get-account`, {
+    signal,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Could not get your account data");
+  }
+
+  const data = await response.json();
+
+  return data;
+};
+
+export const updateUserAddress = async function ({
+  token,
+  name,
+  number,
+  street,
+  city,
+  state,
+  postalCode,
+  country,
+  phone,
+}) {
+  if (!token) throw new Error("You must be logged in to perform this action");
+  if (!name) throw new Error("You must provide a contact name");
+  if (!number) throw new Error("You must provide a street number");
+  if (!city) throw new Error("You must provide a city name");
+  if (!state) throw new Error("You must provide a state name");
+  if (!postalCode) throw new Error("You must provide a postal code");
+  if (!country) throw new Error("You must provide a country");
+  if (!phone) throw new Error("You must provide a contact phone");
+
+  const addressData = {
+    name,
+    number,
+    street,
+    city,
+    state,
+    postalCode,
+    country,
+    phone,
+  };
+
+  const response = await fetch(`http://localhost:3000/user/address`, {
+    method: "POST",
+    body: JSON.stringify(addressData),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok)
+    throw new Error(
+      "There was an erorr with updating your address. Please try later"
+    );
+};
+
 export function calculateRatingPercentages(reviews) {
   const ratingCounts = {};
 

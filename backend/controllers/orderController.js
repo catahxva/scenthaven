@@ -5,7 +5,7 @@ const stripe = require("stripe")(
   "sk_test_51OFgTpANFg5WW6bUiQj8KQ643R0CiLDjwfZCDgrzTtvDNvYPrXfvriFMchR326MZT1GznzZu885DcmweTe5YJtLN00xuqU7W7x"
 );
 
-exports.createPaymentIntent = async function (req, res) {
+exports.createPaymentIntent = async function (req, res, next) {
   try {
     const email = req.user ? req.user.email : req.body.email;
 
@@ -73,6 +73,13 @@ exports.createPaymentIntent = async function (req, res) {
       status: "success",
       clientSecret: paymentIntent.client_secret,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getOrders = async function (req, res, next) {
+  try {
   } catch (err) {
     next(err);
   }

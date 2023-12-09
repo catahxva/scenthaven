@@ -248,3 +248,51 @@ exports.protect = async function (req, res, next) {
     next(err);
   }
 };
+
+exports.getUser = async function (req, res, next) {
+  try {
+    console.log(req.user);
+    const user = {
+      userName: req.user.userName,
+      email: req.user.email,
+      address: req.user.address,
+      favoritesAmount: req.user.favorites.items.length,
+      ordersAmount: req.user.orders.previousOrders.length,
+    };
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        data: user,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.updateUserAddress = async function (req, res, next) {
+  try {
+    const user = req.user;
+
+    user.address = {
+      name: req.body.name,
+      number: req.body.number,
+      street: req.body.street,
+      city: req.body.city,
+      state: req.body.state,
+      postalCode: req.body.postalCode,
+      country: req.body.country,
+      phone: req.body.phone,
+    };
+
+    await user.save({ validateBeforeSave: false });
+
+    res.status(200).json({
+      status: "success",
+      message: "Address updated successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};

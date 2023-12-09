@@ -1,0 +1,29 @@
+.tabbed__comp {
+  width: 100%;
+}
+
+.tabbed__comp__container__btns {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  border-bottom: 2px solid #f03e3e;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.tabbed__btn {
+  background-color: transparent;
+  font-family: inherit;
+  font-size: 2rem;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #333;
+}
+
+.tabbed__btn__active {
+  background-color: #f03e3e;
+  color: #fff;
+}

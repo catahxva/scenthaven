@@ -83,8 +83,12 @@ function AccountPromo() {
           a story waiting to be told. Happy exploring!
         </p>
         <div className={classes.account__container__btns}>
-          <Link className={classes.account__link__big}>Sign Up</Link>
-          <Link className={classes.account__link__small}>Login</Link>
+          <Link to="/auth?mode=signup" className={classes.account__link__big}>
+            Sign Up
+          </Link>
+          <Link to="/auth?mode=login" className={classes.account__link__small}>
+            Login
+          </Link>
         </div>
       </div>
     </section>

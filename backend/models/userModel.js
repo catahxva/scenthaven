@@ -51,6 +51,16 @@ const userSchema = new mongoose.Schema(
         },
       ],
     },
+    orders: {
+      previousOrders: [
+        {
+          orderId: {
+            type: mongoose.Schema.ObjectId,
+            ref: "Orders",
+          },
+        },
+      ],
+    },
     address: {
       name: {
         type: String,

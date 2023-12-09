@@ -1,11 +1,20 @@
 .card {
-  width: 25rem;
-  height: 40rem;
+  width: 28rem;
+  height: 42rem;
   overflow: hidden;
   border-radius: 2rem;
   border: 1px solid #333;
   padding: 1.5rem;
   position: relative;
+}
+
+.card__slider {
+  width: 25rem;
+  height: 40rem;
+}
+
+.card__fave {
+  height: 46rem;
 }
 
 .card__link {
@@ -16,7 +25,7 @@
 }
 
 .container__image {
-  width: 25rem;
+  width: 100%;
   height: 20rem;
   display: flex;
   align-items: center;
@@ -152,4 +161,22 @@
   color: #f03e3e;
   text-transform: uppercase;
   font-weight: 500;
+}
+
+.card__holder__remove__fav {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.card__remove__fav {
+  width: 100%;
+  background-color: #f03e3e;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  color: #fff;
 }

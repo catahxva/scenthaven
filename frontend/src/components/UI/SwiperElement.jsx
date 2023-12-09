@@ -16,7 +16,7 @@ function SwiperElement({ data }) {
       {data.map((product) => {
         return (
           <SwiperSlide key={product._id}>
-            <ProductCard product={product} />
+            <ProductCard product={product} type="slider" />
           </SwiperSlide>
         );
       })}

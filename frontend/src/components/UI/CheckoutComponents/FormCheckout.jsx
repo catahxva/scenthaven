@@ -1,10 +1,15 @@
 import classes from "./FormCheckout.module.css";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { addressActions } from "../../../store/addressSlice";
 
 function FormCheckout() {
   const address = useSelector((state) => state.auth.address);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const nameRef = useRef();
   const numberRef = useRef();
@@ -17,8 +22,29 @@ function FormCheckout() {
 
   const addressExists = Object.keys(address).length > 0 ? true : false;
 
+  const submitHandler = function (e) {
+    e.preventDefault();
+
+    if (addressExists) console.log(address);
+
+    const tempAddress = {
+      name: nameRef.current.value,
+      number: numberRef.current.value,
+      street: streetRef.current.value,
+      city: cityRef.current.value,
+      state: stateRef.current.value,
+      postalCode: postalCodeRef.current.value,
+      country: countryRef.current.value,
+      phone: phoneRef.current.value,
+    };
+
+    dispatch(addressActions.setTemporaryAddress({ address: tempAddress }));
+
+    // navigate('/')
+  };
+
   return (
-    <form className={classes.checkout__form}>
+    <form className={classes.checkout__form} onSubmit={submitHandler}>
       <div className={classes.checkout__form__group}>
         <label htmlFor="name" className={classes.checkout__form__label}>
           Contact name

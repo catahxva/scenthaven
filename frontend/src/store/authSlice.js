@@ -3,12 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const token = JSON.parse(localStorage.getItem(`token`));
 const expiration = JSON.parse(localStorage.getItem("expiration"));
 const userName = JSON.parse(localStorage.getItem("userName"));
+const address = JSON.parse(localStorage.getItem("address"));
 
 const initialAuthState = {
   token,
   expiration,
   isAuthenticated: token ? true : false,
   userName,
+  address,
 };
 
 export const authSlice = createSlice({
@@ -20,12 +22,17 @@ export const authSlice = createSlice({
       state.expiration = action.payload.expiration;
       state.isAuthenticated = true;
       state.userName = action.payload.userName;
+      state.address = action.payload.address;
     },
     logout(state) {
       state.token = undefined;
       state.expiration = undefined;
       state.isAuthenticated = false;
       state.userName = undefined;
+      state.address = undefined;
+    },
+    saveAddress(state, action) {
+      state.address = action.payload.address;
     },
   },
 });
@@ -45,12 +52,24 @@ export const authMiddleware = (store) => (next) => (action) => {
       `userName`,
       JSON.stringify(store.getState().auth.userName)
     );
+    localStorage.setItem(
+      `address`,
+      JSON.stringify(store.getState().auth.address)
+    );
+  }
+
+  if (authActions.saveAddress.match(action)) {
+    localStorage.setItem(
+      `address`,
+      JSON.stringify(store.getState().auth.address)
+    );
   }
 
   if (authActions.logout.match(action)) {
     localStorage.removeItem(`token`);
     localStorage.removeItem(`expiration`);
     localStorage.removeItem(`userName`);
+    localStorage.removeItem(`address`);
   }
 
   return result;

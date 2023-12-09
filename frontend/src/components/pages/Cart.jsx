@@ -3,6 +3,8 @@ import CartItems from "../UI/CartComponents/CartItems";
 import Placeholder from "../UI/Placeholder";
 import classes from "./Cart.module.css";
 
+import { useEffect } from "react";
+
 import { useSelector } from "react-redux";
 
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +12,10 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCartProducts } from "../../util/utilities";
 
 function Cart() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const items = useSelector((state) => state.cart.items);
   const numberOfItems = items.reduce((acc, c) => acc + c.productQuantity, 0);
 

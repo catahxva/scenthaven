@@ -7,19 +7,20 @@ import { useEffect } from "react";
 
 import {
   useSearchParams,
-  Form,
-  Link,
   useNavigation,
   json,
   redirect,
   useActionData,
-  useSubmit,
   useNavigate,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/authSlice";
 
 function Authentication() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   const actionData = useActionData();
@@ -35,6 +36,7 @@ function Authentication() {
           token: actionData[0],
           expiration: actionData[1],
           userName: actionData[2],
+          address: actionData[3],
         })
       );
 
@@ -136,22 +138,22 @@ export async function action({ request, params }) {
     throw json({ message: "Could not authenticate user" }, { status: 500 });
   }
 
-  const { token, username } = await response.json();
+  const { token, username, address } = await response.json();
   const expiration = new Date();
   expiration.setDate(expiration.getDate() + 90);
 
   if (mode === "signup" || mode === "forgot") return redirect("/auth-message");
 
   if (mode === "login" && token) {
-    return [token, expiration.toISOString(), username];
+    return [token, expiration.toISOString(), username, address];
   }
 
   if (mode === "reset" && token) {
-    return [token, expiration.toISOString(), username];
+    return [token, expiration.toISOString(), username, address];
   }
 
   if (mode === "forgotReset" && token) {
-    return [token, expiration.toISOString(), username];
+    return [token, expiration.toISOString(), username, address];
   }
 }
 

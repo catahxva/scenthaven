@@ -21,6 +21,7 @@ const createSendToken = (user, statusCode, res) => {
     status: "success",
     token,
     username: user.userName,
+    address: user.address,
   });
 };
 
@@ -290,7 +291,9 @@ exports.updateUserAddress = async function (req, res, next) {
 
     res.status(200).json({
       status: "success",
-      message: "Address updated successfully",
+      data: {
+        data: user.address,
+      },
     });
   } catch (err) {
     next(err);

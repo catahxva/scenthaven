@@ -26,7 +26,7 @@ function Navigation() {
           <Link className={classes.nav__link}>Women's</Link>
         </div>
         <div className={classes.nav__container}>
-          <Link>
+          <Link to="/search">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

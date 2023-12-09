@@ -7,6 +7,10 @@ import { authActions } from "../../store/authSlice";
 import classes from "./AuthVerify.module.css";
 
 function AuthVerify() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const actionData = useActionData();
   const submit = useSubmit();
   const dispatch = useDispatch();

@@ -3,6 +3,7 @@ import classes from "./Product.module.css";
 import ProductImages from "../UI/ProductComponents/ProductImages";
 import ProductInfo from "../UI/ProductComponents/ProductInfo";
 
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient, fetchOneProduct } from "../../util/utilities";
@@ -29,6 +30,10 @@ const ProductIdContextProvider = function ({ children, id }) {
 };
 
 function Product() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { id } = useParams();
 
   const { data } = useQuery({

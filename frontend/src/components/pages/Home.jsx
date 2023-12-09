@@ -5,9 +5,13 @@ import HomeLatest from "../UI/HomeComponents/HomeLatest";
 import HomePopular from "../UI/HomeComponents/HomePopular";
 import AccountPromo from "../UI/HomeComponents/AccountPromo";
 
-import { queryClient, fetchProducts } from "../../util/utilities";
+import { useEffect } from "react";
 
 function Home() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Header />

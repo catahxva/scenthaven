@@ -1,8 +1,14 @@
 import classes from "./AuthMessage.module.css";
 
+import { useEffect } from "react";
+
 import { Link } from "react-router-dom";
 
 function AuthMessage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <section className={classes.auth__message__section}>
       <h2 className={classes.auth__message__text}>

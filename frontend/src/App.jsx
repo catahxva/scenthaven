@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import Root from "./components/pages/Root";
 import Home from "./components/pages/Home";
 import Cart from "./components/pages/Cart";
+import CartCheckout from "./components/pages/CartCheckout";
 import Product, { loader as productLoader } from "./components/pages/Product";
 import Authentication, {
   action as authAction,
@@ -13,6 +14,7 @@ import AuthVerify, {
   action as authVerifyAction,
 } from "./components/pages/AuthVerify";
 import Account from "./components/pages/Account";
+import Search from "./components/pages/Search";
 
 import { queryClient } from "./util/utilities";
 
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/cart-checkout",
+        element: <CartCheckout />,
       },
       {
         path: "/products/:id",
@@ -51,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/account/:username",
         element: <Account />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
     ],
   },

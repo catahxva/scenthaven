@@ -4,6 +4,8 @@ import { forwardRef, useRef, useImperativeHandle, useState } from "react";
 import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 import { updateUserAddress, queryClient } from "../../../util/utilities";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../../store/authSlice";
 
 const UpdateAddress = forwardRef(function ({ address }, ref) {
   const dialog = useRef();
@@ -15,6 +17,8 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
   const postalCodeRef = useRef();
   const countryRef = useRef();
   const phoneRef = useRef();
+
+  const dispatch = useDispatch();
 
   const [contentState, setContentState] = useState("normal");
   const [errorState, setErrorState] = useState();
@@ -31,8 +35,15 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
       setErrorState(error);
       setContentState("error");
     },
-    onSuccess() {
+    onSuccess(data) {
+      const address = data.data.data;
+
       setContentState("success");
+
+      dispatch(authActions.saveAddress({ address }));
+    },
+    onSettled() {
+      setButtonText("Submit");
     },
   });
 
@@ -179,7 +190,7 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
           <button
             className={`${classes.address__form__btn} ${classes.address__form__btn__submit}`}
           >
-            Submit
+            {buttonText}
           </button>
           <button
             onClick={closeHandler}

@@ -200,6 +200,10 @@ export const updateUserAddress = async function ({
     throw new Error(
       "There was an erorr with updating your address. Please try later"
     );
+
+  const data = await response.json();
+
+  return data;
 };
 
 export function calculateRatingPercentages(reviews) {

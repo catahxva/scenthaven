@@ -135,7 +135,7 @@ span {
   font-size: 2rem;
   font-weight: 400;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .cart__checkout {
@@ -147,4 +147,5 @@ span {
   border-radius: 1rem;
   color: #fff;
   cursor: pointer;
+  text-decoration: none;
 }

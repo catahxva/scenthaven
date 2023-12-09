@@ -1,5 +1,7 @@
 import classes from "../../pages/Cart.module.css";
 
+import { Link } from "react-router-dom";
+
 import CartItem from "./CartItem";
 
 function CartItems({ items }) {
@@ -20,7 +22,9 @@ function CartItems({ items }) {
       <div className={classes.cart__total__container}>
         <div>
           <span className={classes.cart__total}>Total: {totalPrice}$</span>
-          <button className={classes.cart__checkout}>Checkout</button>
+          <Link to="/cart-checkout" className={classes.cart__checkout}>
+            Checkout
+          </Link>
         </div>
       </div>
     </>

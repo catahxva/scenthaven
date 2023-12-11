@@ -33,13 +33,14 @@ export default function useGetCart({ key, type }) {
     content = <Placeholder message={error.message} type={"error"} />;
   }
 
-  if (data && key === "cart") {
+  if (numberOfItems > 0 && data && key === "cart") {
     const itemsFromDB = data.data.data;
 
     content = <CartItems items={itemsFromDB} />;
   }
 
-  if (data && type === "cartCheckout") {
+  if (data && key === "cartCheckout") {
+    console.log("last check");
     const itemsFromDB = data.data.data;
 
     content = <CheckoutItems items={itemsFromDB} />;

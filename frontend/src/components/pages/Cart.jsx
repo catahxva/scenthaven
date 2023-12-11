@@ -12,7 +12,7 @@ function Cart() {
   const { content, numberOfItems } = useGetCart({ key: "cart" });
 
   return (
-    <section className={classes.cart__section}>
+    <section className="first__section">
       <h2>Your Shopping Cart ({numberOfItems})</h2>
       {content}
     </section>

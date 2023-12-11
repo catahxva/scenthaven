@@ -134,8 +134,18 @@ export async function action({ request, params }) {
     body: JSON.stringify(data),
   });
 
+  if (!response.ok && mode === "login") {
+    throw json(
+      { message: "Invalid email or password. Please try again later!" },
+      { status: 400 }
+    );
+  }
+
   if (!response.ok) {
-    throw json({ message: "Could not authenticate user" }, { status: 500 });
+    throw json(
+      { message: "Could not authenticate user, please try again later." },
+      { status: 500 }
+    );
   }
 
   const { token, username, address } = await response.json();

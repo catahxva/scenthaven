@@ -49,6 +49,17 @@ function Payment() {
     <section className={classes.payment__section}>
       <div className={classes.payment__container}>
         <h2>Payment</h2>
+        <span className={classes.payment__span}>
+          Please keep in mind that this is just a project website, please use
+          this card information to perform an order:
+        </span>
+        <ul className={classes.payment__list}>
+          <li className={classes.payment__list__item}>
+            Card number: 4242 4242 4242 4242
+          </li>
+          <li className={classes.payment__list__item}>Expiration: 04/24</li>
+          <li className={classes.payment__list__item}>CVC: 424</li>
+        </ul>
         {stripePromise && clientSecret && !isError && (
           <Elements stripe={stripePromise} options={{ clientSecret }}>
             <PaymentForm />

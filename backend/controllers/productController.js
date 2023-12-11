@@ -125,13 +125,6 @@ exports.getCartProducts = async function (req, res, next) {
     // get the actual data.
     const cartItemsDB = await Promise.all(cartPromises);
 
-    const notFoundItems =
-      cartItemsDB.filter(
-        (item) => item.notFound === true || item.error === true
-      ).length > 0
-        ? true
-        : false;
-
     // creating the array of items which will be sent to the
     // frontend and used to render the cart.
     // using both the current element in the iteration and the

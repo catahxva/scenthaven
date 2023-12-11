@@ -21,7 +21,7 @@ function CartCheckout() {
   if (items.length <= 0) navigate("/cart");
 
   return (
-    <section className={classes.checkout__section}>
+    <section className="first__section">
       <div className={classes.checkout__grid}>
         <div>
           <h2>Checkout</h2>

@@ -18,7 +18,7 @@ function Account() {
   if (!username) navigate("/");
 
   return (
-    <section className={classes.account__section}>
+    <section className="first__section">
       <h2 className={classes.account__title}>Welcome {username}</h2>
       <TabbedComp />
     </section>

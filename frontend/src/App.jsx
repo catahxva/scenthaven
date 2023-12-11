@@ -2,7 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 
 import Root from "./components/pages/Root";
+import Error from "./components/pages/Error";
 import Home from "./components/pages/Home";
+import Overview from "./components/pages/Overview";
 import Cart from "./components/pages/Cart";
 import CartCheckout from "./components/pages/CartCheckout";
 import Payment from "./components/pages/Payment";
@@ -24,10 +26,15 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/overview",
+        element: <Overview />,
       },
       {
         path: "/cart",

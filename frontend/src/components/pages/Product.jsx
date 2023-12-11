@@ -58,7 +58,7 @@ function Product() {
 
   return (
     <>
-      <section className={classes.product__section}>
+      <section className="first__section">
         <div className={classes.product__header}>
           <ProductImages imagesArray={product.images} name={product.name} />
           <ProductInfo product={product} />

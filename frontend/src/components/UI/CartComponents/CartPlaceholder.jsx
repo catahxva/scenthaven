@@ -1,5 +1,7 @@
 import classes from "./CartPlaceholder.module.css";
 
+import { Link } from "react-router-dom";
+
 function CartPlaceholder() {
   return (
     <div className={classes.cart__container__placeholder}>

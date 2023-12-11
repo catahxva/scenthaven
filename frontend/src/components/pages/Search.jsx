@@ -52,7 +52,7 @@ function Search() {
   }
 
   return (
-    <section className={classes.search__section}>
+    <section className="first__section">
       <form className={classes.search__form}>
         <button className={classes.search__btn}>
           <svg

@@ -2,11 +2,6 @@ span {
   display: block;
 }
 
-.cart__section {
-  padding-top: 12rem;
-  min-height: 100vh;
-}
-
 .cart__items__container {
   width: 100%;
   display: flex;

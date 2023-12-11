@@ -16,7 +16,7 @@ function Favorites({ favorites }) {
 
   if (favoritesLength > 0) {
     content = (
-      <div className={classes.account__favorites__grid}>
+      <div className="generic__grid">
         {favorites.map((fav) => {
           return <ProductCard product={fav} type="favorite" key={fav._id} />;
         })}

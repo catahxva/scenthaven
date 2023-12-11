@@ -1,8 +1,3 @@
-.checkout__section {
-  padding-top: 12rem;
-  min-height: 100vh;
-}
-
 .checkout__grid {
   width: 100%;
   display: grid;

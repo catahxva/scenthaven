@@ -35,4 +35,5 @@
   font-family: inherit;
   transition: all 0.5s;
   border: none;
+  cursor: pointer;
 }

@@ -1,0 +1,33 @@
+.checkout__item {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.checkout__item__brand {
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.checkout__item__name {
+  font-size: 1.8rem;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.checkout__item__details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.checkout__item__span {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}

@@ -53,6 +53,9 @@ function AccountData({ accountData }) {
               Contact name: {address.name}
             </span>
             <span className={classes.account__span}>
+              Email: {address.email}
+            </span>
+            <span className={classes.account__span}>
               Street: {address.street}
             </span>
             <span className={classes.account__span}>

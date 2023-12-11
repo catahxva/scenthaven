@@ -36,8 +36,17 @@ function ProductInfo({ product }) {
     notes,
   } = useProductData(product, null);
 
+  console.log(product);
+
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+
+  const productPrice =
+    selectedQuantityIndex !== null
+      ? `${inStockQuantities[selectedQuantityIndex].price}$`
+      : "Select a quantity";
+
+  console.log(inStockQuantities);
 
   let faveList;
 
@@ -200,6 +209,7 @@ function ProductInfo({ product }) {
       )}
       {!outOfStock && (
         <>
+          <span className={classes.product__price}>{productPrice}</span>
           <div className={classes.product__container__quantities}>
             {inStockQuantities.map((q, i) => {
               return (

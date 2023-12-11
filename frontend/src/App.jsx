@@ -5,6 +5,7 @@ import Root from "./components/pages/Root";
 import Home from "./components/pages/Home";
 import Cart from "./components/pages/Cart";
 import CartCheckout from "./components/pages/CartCheckout";
+import Payment from "./components/pages/Payment";
 import Product, { loader as productLoader } from "./components/pages/Product";
 import Authentication, {
   action as authAction,
@@ -15,6 +16,7 @@ import AuthVerify, {
 } from "./components/pages/AuthVerify";
 import Account from "./components/pages/Account";
 import Search from "./components/pages/Search";
+import OrderMessage from "./components/pages/OrderMessage";
 
 import { queryClient } from "./util/utilities";
 
@@ -62,7 +64,15 @@ const router = createBrowserRouter([
         path: "/search",
         element: <Search />,
       },
+      {
+        path: "/order-message",
+        element: <OrderMessage />,
+      },
     ],
+  },
+  {
+    path: "/payment",
+    element: <Payment />,
   },
 ]);
 

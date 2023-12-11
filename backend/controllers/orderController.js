@@ -7,13 +7,13 @@ const stripe = require("stripe")(
 
 exports.createPaymentIntent = async function (req, res, next) {
   try {
-    const email = req.user ? req.user.email : req.body.email;
-
     const { shipping: shippingInfo } = req.body;
     const { products: requestProducts } = req.body;
 
+    const email = shippingInfo.email;
+
     const productPromises = requestProducts.map(async (product) => {
-      return await Product.findById(product.product);
+      return await Product.findById(product.id);
     });
 
     const productsFromDB = await Promise.all(productPromises);
@@ -31,23 +31,13 @@ exports.createPaymentIntent = async function (req, res, next) {
           )
         );
 
-      if (selectedQuantity.price !== requestProducts[index].price)
-        return next(
-          new AppError(
-            `The price for ${product.name} for the quantity of ${selectedQuantity.quantity} ML has been modified. Please modify your order and try again.`,
-            400
-          )
-        );
-
       return selectedQuantity.price * requestProducts[index].productQuantity;
     });
 
-    const total =
-      prices.reduce((acc, currentPrice) => acc + currentPrice, 0) +
-      Number(shippingInfo.price);
+    const total = prices.reduce((acc, currentPrice) => acc + currentPrice, 0);
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: total,
+      amount: total * 100,
       currency: "usd",
       automatic_payment_methods: {
         enabled: true,
@@ -60,12 +50,11 @@ exports.createPaymentIntent = async function (req, res, next) {
         address: {
           line1: `${shippingInfo.number} ${shippingInfo.street}`,
           city: shippingInfo.city,
-          state: shippingInfo.county,
+          state: shippingInfo.state,
           postal_code: shippingInfo.postalCode,
           country: shippingInfo.country,
         },
         phone: shippingInfo.phone,
-        carrier: shippingInfo.carrier,
       },
     });
 

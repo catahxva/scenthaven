@@ -11,6 +11,9 @@ export const addressSlice = createSlice({
     setTemporaryAddress(state, action) {
       state.address = action.payload.address;
     },
+    clearTemporaryAddress(state) {
+      state.address = undefined;
+    },
   },
 });
 

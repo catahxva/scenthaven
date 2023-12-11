@@ -1,0 +1,43 @@
+.payment__form {
+  width: 70rem;
+  padding: 2rem;
+  border-radius: 2rem;
+  -webkit-box-shadow: 5px 5px 12px 7px rgba(0, 0, 0, 0.09);
+  box-shadow: 5px 5px 12px 7px rgba(0, 0, 0, 0.09);
+}
+
+.payment__form__container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.payment__amount {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.payment__form__button {
+  padding: 0.8rem 1.6rem;
+  background-color: #f03e3e;
+  color: #fff;
+  font-family: inherit;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.8rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.payment__form__button:disabled {
+  background-color: #333;
+}
+
+.payment__message {
+  font-size: 2rem;
+  color: #f03e3e;
+  font-weight: 500;
+}

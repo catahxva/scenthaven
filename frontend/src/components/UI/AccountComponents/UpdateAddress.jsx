@@ -10,6 +10,7 @@ import { authActions } from "../../../store/authSlice";
 const UpdateAddress = forwardRef(function ({ address }, ref) {
   const dialog = useRef();
   const nameRef = useRef();
+  const emailRef = useRef();
   const numberRef = useRef();
   const streetRef = useRef();
   const cityRef = useRef();
@@ -67,6 +68,7 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
     mutate({
       token,
       name: nameRef.current.value,
+      email: emailRef.current.value,
       number: numberRef.current.value,
       street: streetRef.current.value,
       city: cityRef.current.value,
@@ -92,6 +94,19 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
             defaultValue={address ? address.name : ""}
             className={classes.address__form__input}
             ref={nameRef}
+            required
+          />
+        </div>
+        <div className={classes.address__form__group}>
+          <label htmlFor="name" className={classes.address__form__label}>
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            defaultValue={address ? address.email : ""}
+            className={classes.address__form__input}
+            ref={emailRef}
             required
           />
         </div>

@@ -12,6 +12,7 @@ function FormCheckout() {
   const navigate = useNavigate();
 
   const nameRef = useRef();
+  const emailRef = useRef();
   const numberRef = useRef();
   const streetRef = useRef();
   const cityRef = useRef();
@@ -20,15 +21,16 @@ function FormCheckout() {
   const countryRef = useRef();
   const phoneRef = useRef();
 
-  const addressExists = Object.keys(address).length > 0 ? true : false;
+  console.log(address);
+
+  const addressExists = !address ? false : true;
 
   const submitHandler = function (e) {
     e.preventDefault();
 
-    if (addressExists) console.log(address);
-
     const tempAddress = {
       name: nameRef.current.value,
+      email: emailRef.current.value,
       number: numberRef.current.value,
       street: streetRef.current.value,
       city: cityRef.current.value,
@@ -40,7 +42,7 @@ function FormCheckout() {
 
     dispatch(addressActions.setTemporaryAddress({ address: tempAddress }));
 
-    // navigate('/')
+    navigate("/payment");
   };
 
   return (
@@ -55,6 +57,19 @@ function FormCheckout() {
           className={classes.checkout__form__input}
           name="name"
           ref={nameRef}
+          required
+        />
+      </div>
+      <div className={classes.checkout__form__group}>
+        <label htmlFor="name" className={classes.checkout__form__label}>
+          Email
+        </label>
+        <input
+          type="email"
+          defaultValue={addressExists ? address.email : ""}
+          className={classes.checkout__form__input}
+          name="email"
+          ref={emailRef}
           required
         />
       </div>

@@ -20,28 +20,30 @@ function ProductImages({ imagesArray, name }) {
           }`}
         />
       </div>
-      <div className={classes.product__container__small__images}>
-        {imagesArray.map((img, i) => {
-          return (
-            <div
-              key={img._id}
-              onClick={() => changeImageHandler(i)}
-              className={`${classes.product__container__image__small} ${
-                i === selectedImageIndex
-                  ? classes.product__container__image__small__active
-                  : ""
-              }`}
-            >
-              <img
-                src={img.imageSrc}
-                className={`${classes.product__small__img} ${
-                  i === 0 ? classes.product__small__img__smaller : ""
+      {imagesArray.length > 1 && (
+        <div className={classes.product__container__small__images}>
+          {imagesArray.map((img, i) => {
+            return (
+              <div
+                key={img._id}
+                onClick={() => changeImageHandler(i)}
+                className={`${classes.product__container__image__small} ${
+                  i === selectedImageIndex
+                    ? classes.product__container__image__small__active
+                    : ""
                 }`}
-              />
-            </div>
-          );
-        })}
-      </div>
+              >
+                <img
+                  src={img.imageSrc}
+                  className={`${classes.product__small__img} ${
+                    i === 0 ? classes.product__small__img__smaller : ""
+                  }`}
+                />
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

@@ -59,6 +59,9 @@ export const cartSlice = createSlice({
 
       if (index < 0) return;
     },
+    clearCart(state) {
+      state.items = [];
+    },
   },
 });
 
@@ -73,6 +76,10 @@ export const cartMiddleware = (store) => (next) => (action) => {
     cartActions.decreaseQuantity.match(action)
   ) {
     localStorage.setItem(`items`, JSON.stringify(store.getState().cart.items));
+  }
+
+  if (cartActions.clearCart.match(action)) {
+    localStorage.removeItem(`item`);
   }
 
   return result;

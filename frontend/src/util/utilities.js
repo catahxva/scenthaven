@@ -159,6 +159,7 @@ export const getUserAccount = async function ({ signal, token }) {
 export const updateUserAddress = async function ({
   token,
   name,
+  email,
   number,
   street,
   city,
@@ -169,6 +170,7 @@ export const updateUserAddress = async function ({
 }) {
   if (!token) throw new Error("You must be logged in to perform this action");
   if (!name) throw new Error("You must provide a contact name");
+  if (!email) throw new Error("You must provide an email");
   if (!number) throw new Error("You must provide a street number");
   if (!city) throw new Error("You must provide a city name");
   if (!state) throw new Error("You must provide a state name");
@@ -178,6 +180,7 @@ export const updateUserAddress = async function ({
 
   const addressData = {
     name,
+    email,
     number,
     street,
     city,
@@ -204,6 +207,36 @@ export const updateUserAddress = async function ({
   const data = await response.json();
 
   return data;
+};
+
+export const getPaymentIntent = async function ({
+  signal,
+  shipping,
+  products,
+}) {
+  if (!shipping) throw new Error("You must provide a shipping address");
+  if (!products)
+    throw new Error(
+      "You must have products inside your cart to complete a payment"
+    );
+
+  const response = await fetch(
+    `http://localhost:3000/orders/create-payment-intent`,
+    {
+      signal,
+      method: "POST",
+      body: JSON.stringify({ shipping, products }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!response.ok) throw new Error("There has been an error.");
+
+  const { clientSecret } = await response.json();
+
+  return clientSecret;
 };
 
 export function calculateRatingPercentages(reviews) {

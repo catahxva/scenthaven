@@ -1,0 +1,12 @@
+.cart__container__placeholder {
+  width: 100%;
+}
+
+.cart__placeholder__text {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.cart__placeholder__link {
+  color: #333;
+}

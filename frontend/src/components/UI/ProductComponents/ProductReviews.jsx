@@ -23,7 +23,7 @@ function ProductReviews({ reviews, rating, id }) {
         {visibleReviews.map((review) => {
           return <Review key={review._id} review={review} />;
         })}
-        {reviews.length !== amountOfReviews && (
+        {reviews.length !== amountOfReviews && reviews.length > 3 && (
           <button
             className={classes.product__reviews__more}
             onClick={() => setAmountOfReviews((prevState) => prevState + 3)}

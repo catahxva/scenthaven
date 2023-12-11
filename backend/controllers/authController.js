@@ -252,7 +252,6 @@ exports.protect = async function (req, res, next) {
 
 exports.getUser = async function (req, res, next) {
   try {
-    console.log(req.user);
     const user = {
       userName: req.user.userName,
       email: req.user.email,
@@ -278,6 +277,7 @@ exports.updateUserAddress = async function (req, res, next) {
 
     user.address = {
       name: req.body.name,
+      email: req.body.email,
       number: req.body.number,
       street: req.body.street,
       city: req.body.city,

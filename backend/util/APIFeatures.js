@@ -9,8 +9,9 @@ exports.createFilters = (query) => {
   }
 
   if (query.brand) {
+    console.log(query.brand.split(",").map((b) => new RegExp(b, "i")));
     filters.brand = {
-      $in: query.brand.split(",").map((b) => new RegExp(b, "i")),
+      $in: query.brand.split(","),
     };
   }
 
@@ -68,7 +69,7 @@ exports.createSort = (query) => {
 
 exports.createPagination = (query) => {
   let skip = 0;
-  let limit = 10;
+  let limit = 15;
 
   if (query.limit) {
     limit = query.limit;

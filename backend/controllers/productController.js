@@ -12,6 +12,10 @@ exports.getAllProducts = async function (req, res, next) {
     const sortCriteria = createSort(req.query);
     const [skip, limit] = createPagination(req.query);
 
+    const totalProducts = await Product.countDocuments(filters);
+
+    const maxPages = Math.ceil(totalProducts / 15);
+
     const docs = await Product.find(filters)
       .sort(sortCriteria)
       .skip(skip)
@@ -21,6 +25,8 @@ exports.getAllProducts = async function (req, res, next) {
       status: "success",
       results: docs.length,
       data: {
+        totalProducts,
+        maxPages,
         data: docs,
       },
     });
@@ -31,7 +37,10 @@ exports.getAllProducts = async function (req, res, next) {
 
 exports.getFilters = async function (req, res, next) {
   try {
+    const paramGender = req.params.gender;
+
     const brandValues = await Product.distinct("brand");
+
     const genderValues = await Product.distinct("gender");
     const concentrationValues = await Product.distinct("concentration");
 
@@ -51,14 +60,26 @@ exports.getFilters = async function (req, res, next) {
       minPrice: result[0].minPrice,
     };
 
-    res.status(200).json({
-      status: "success",
-      data: {
+    let data;
+
+    if (!paramGender)
+      data = {
         brandValues,
         genderValues,
         concentrationValues,
         priceRange,
-      },
+      };
+
+    if (paramGender)
+      data = {
+        brandValues,
+        concentrationValues,
+        priceRange,
+      };
+
+    res.status(200).json({
+      status: "success",
+      data,
     });
   } catch (err) {
     next(err);

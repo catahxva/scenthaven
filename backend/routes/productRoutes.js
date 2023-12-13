@@ -5,7 +5,7 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
-router.route("/get-filters").get(productController.getFilters);
+router.route("/get-filters/:gender?").get(productController.getFilters);
 
 router
   .route("/")

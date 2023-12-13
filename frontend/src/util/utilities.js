@@ -19,6 +19,18 @@ export const fetchProducts = async function ({ signal, queryString }) {
   return data;
 };
 
+export const fetchFilters = async function ({ signal }) {
+  const response = await fetch(`http://localhost:3000/products/get-filters`, {
+    signal,
+  });
+
+  if (!response.ok) throw new Error("Could not get filter values");
+
+  const data = await response.json();
+
+  return data;
+};
+
 export const fetchOneProduct = async function ({ signal, id }) {
   const response = await fetch(`http://localhost:3000/products/${id}`, {
     signal,

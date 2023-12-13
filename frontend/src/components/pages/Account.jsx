@@ -3,7 +3,6 @@ import classes from "./Account.module.css";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 
 import TabbedComp from "../UI/AccountComponents/TabbedComp";
 
@@ -12,10 +11,16 @@ function Account() {
     window.scrollTo(0, 0);
   }, []);
 
+  const token = useSelector((state) => state.auth.token);
+
+  console.log(token);
+
   const { username } = useParams();
   const navigate = useNavigate();
 
-  if (!username) navigate("/");
+  useEffect(() => {
+    if (!username || token === null) navigate("/");
+  }, [username, token]);
 
   return (
     <section className="first__section">

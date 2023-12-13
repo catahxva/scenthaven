@@ -1,0 +1,38 @@
+.overview__pagination__container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overview__pagination {
+  margin-top: 4.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.overview__pagination__btn {
+  background-color: #fff;
+  border: 1px solid #f03e3e;
+  font-family: inherit;
+  padding: 0.4rem 1.2rem;
+  width: 3rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  color: #333;
+}
+
+.overview__pagination__btn__active {
+  background-color: #f03e3e;
+  color: #fff;
+}
+
+.overview__pagination__span {
+  display: block;
+  width: 1rem;
+  font-size: 2rem;
+}

@@ -17,6 +17,7 @@ import AuthVerify, {
   action as authVerifyAction,
 } from "./components/pages/AuthVerify";
 import Account from "./components/pages/Account";
+import { loader as logoutLoader } from "./components/pages/Logout";
 import Search from "./components/pages/Search";
 import OrderMessage from "./components/pages/OrderMessage";
 
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "/account/:username",
         element: <Account />,
+      },
+      {
+        path: "/logout",
+        loader: logoutLoader,
       },
       {
         path: "/search",

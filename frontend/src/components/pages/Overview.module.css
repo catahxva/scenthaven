@@ -1,0 +1,7 @@
+.overview__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 0.4fr 1.6fr;
+  column-gap: 5rem;
+  align-items: start;
+}

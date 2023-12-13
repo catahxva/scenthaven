@@ -41,6 +41,9 @@ function AccountData({ accountData }) {
         <Link to="/auth?mode=reset" className={classes.account__link}>
           Reset password
         </Link>
+        <Link to="/logout" className={classes.account__link}>
+          Logout
+        </Link>
       </div>
       <div className={classes.account__data__address}>
         <h3 className={classes.account__data__title}>Address info</h3>

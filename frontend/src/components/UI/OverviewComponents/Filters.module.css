@@ -1,0 +1,50 @@
+.container__filters {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4rem;
+}
+
+.filters__group__title {
+  color: #333;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+.filters__container__btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.filters__btn {
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0.5rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.filters__btn__deco {
+  width: 2rem;
+  height: 2rem;
+  background-color: #fff;
+  border: 1px solid #f03e3e;
+  border-radius: 0.5rem;
+}
+
+.filters__btn__deco__active {
+  background-color: #f03e3e;
+}
+
+.filters__btn__span {
+  font-size: 1.6rem;
+  text-transform: capitalize;
+  font-weight: 400;
+  display: block;
+}

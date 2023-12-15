@@ -36,6 +36,19 @@ exports.createPaymentIntent = async function (req, res, next) {
 
     const total = prices.reduce((acc, currentPrice) => acc + currentPrice, 0);
 
+    const productsForOrder = productsFromDB.map((product, i) => {
+      return {
+        productQuantity: requestProducts[i].productQuantity,
+        quantity: product.quantities.filter((q) => {
+          return q.quantity === requestProducts[i].quantity;
+        })[0].quantity,
+        cover: product.imageCover,
+        name: product.name,
+        brand: product.brand,
+        price: prices[i],
+      };
+    });
+
     const paymentIntent = await stripe.paymentIntents.create({
       amount: total * 100,
       currency: "usd",
@@ -58,6 +71,13 @@ exports.createPaymentIntent = async function (req, res, next) {
       },
     });
 
+    await Orders.create({
+      user: req.user?._id,
+      products: productsForOrder,
+      address: productsFromDB,
+      total,
+    });
+
     res.status(200).json({
       status: "success",
       clientSecret: paymentIntent.client_secret,
@@ -69,7 +89,20 @@ exports.createPaymentIntent = async function (req, res, next) {
 
 exports.getOrders = async function (req, res, next) {
   try {
+    const { email } = req.body;
+
+    const orders = await Orders.find({
+      $or: [{ "address.email": email }, { user: req.user?._id }],
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        data: orders,
+      },
+    });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };

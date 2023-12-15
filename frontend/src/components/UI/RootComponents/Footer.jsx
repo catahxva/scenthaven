@@ -11,8 +11,12 @@ function Footer() {
             ScentHaven
           </Link>
           <div className={classes.footer__links}>
-            <Link className={classes.footer__link}>Shop</Link>
-            <Link className={classes.footer__link}>Register</Link>
+            <Link to="/overview" className={classes.footer__link}>
+              Shop
+            </Link>
+            <Link to="/auth?mode=signup" className={classes.footer__link}>
+              Register
+            </Link>
           </div>
         </div>
       </section>

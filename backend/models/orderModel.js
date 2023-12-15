@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
 
 const orderSchema = new mongoose.Schema(
   {
@@ -7,22 +6,30 @@ const orderSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    email: {
-      type: String,
-      required: [validator.isEmail, "Please provide a valid email."],
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Users",
     },
     products: [
       {
-        product: {
-          type: mongoose.Schema.ObjectId,
-          ref: "Products",
-        },
         productQuantity: {
           type: Number,
           required: true,
         },
         quantity: {
           type: Number,
+          required: true,
+        },
+        cover: {
+          type: String,
+          required: true,
+        },
+        brand: {
+          type: String,
+          required: true,
+        },
+        name: {
+          type: String,
           required: true,
         },
         price: {
@@ -33,6 +40,9 @@ const orderSchema = new mongoose.Schema(
     ],
     address: {
       name: {
+        type: String,
+      },
+      email: {
         type: String,
       },
       number: {
@@ -67,13 +77,6 @@ const orderSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-
-orderSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "products.product",
-    select: "imageCover name _id",
-  });
-});
 
 const Orders = mongoose.model("Orders", orderSchema);
 

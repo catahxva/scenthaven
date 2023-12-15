@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import classes from "./Orders.module.css";
 
+import OrderItem from "./OrderItem";
+
 function Orders({ orders }) {
   const ordersLength = orders.length;
 
@@ -18,8 +20,10 @@ function Orders({ orders }) {
 
   if (ordersLength > 0)
     content = (
-      <div className={classes.account__orders__grid}>
-        <Link className={classes.account__order}></Link>
+      <div className="generic__grid">
+        {orders.map((order) => {
+          return <OrderItem order={order} key={order._id} />;
+        })}
       </div>
     );
 

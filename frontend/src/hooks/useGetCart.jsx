@@ -30,6 +30,7 @@ export default function useGetCart({ key, type }) {
   }
 
   if (isError) {
+    console.log(error);
     content = <Placeholder message={error.message} type={"error"} />;
   }
 

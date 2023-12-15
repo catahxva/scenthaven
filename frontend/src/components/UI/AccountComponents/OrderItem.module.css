@@ -1,0 +1,31 @@
+.order__item {
+  width: 100%;
+  padding: 2rem;
+  border: 1px solid #333;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.order__title {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.order__date {
+  font-size: 1.6rem;
+}
+
+.order__number__products {
+  font-size: 1.8rem;
+  display: block;
+}
+
+.order__total {
+  font-size: 2rem;
+}

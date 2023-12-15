@@ -41,6 +41,8 @@ function Payment() {
       getPaymentIntent({ signal, shipping: address, products }),
   });
 
+  if (isError) console.log(error);
+
   useEffect(() => {
     setClientSecret(data);
   }, [data]);

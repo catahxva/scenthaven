@@ -36,8 +36,6 @@ function ProductInfo({ product }) {
     notes,
   } = useProductData(product, null);
 
-  console.log(product);
-
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
 
@@ -45,8 +43,6 @@ function ProductInfo({ product }) {
     selectedQuantityIndex !== null
       ? `${inStockQuantities[selectedQuantityIndex].price}$`
       : "Select a quantity";
-
-  console.log(inStockQuantities);
 
   let faveList;
 

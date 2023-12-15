@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import UpdateAddress from "./UpdateAddress";
+import { useSelector } from "react-redux";
 
 function AccountData({ accountData }) {
   const { address } = accountData;

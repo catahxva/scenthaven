@@ -2,7 +2,7 @@ import classes from "./Overview.module.css";
 
 import { useEffect } from "react";
 
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts, fetchFilters } from "../../util/utilities";
 
@@ -14,6 +14,9 @@ import Pagination from "../UI/OverviewComponents/Pagination";
 
 function Overview() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { gender } = useParams();
+
+  console.log(gender);
 
   const entries = Object.entries(Object.fromEntries(searchParams));
 
@@ -33,6 +36,9 @@ function Overview() {
   const entrySort = entries.find((entry) => entry[0] === "sort");
   const activeSort = entrySort ? entrySort[1] : "default";
 
+  const entryPage = entries.find((entry) => entry[0] === "page");
+  const activePage = entryPage ? entryPage[1] : 1;
+
   const queryStr = entries.map((entry) => entry.join("=")).join("&");
 
   useEffect(() => {
@@ -47,9 +53,10 @@ function Overview() {
       const keys = Object.keys(paramsObj);
 
       const index = keys.findIndex((key) => key === categoryType);
-      const pageIndex = keys.findIndex((key) => key === "page");
 
       const valueExists = paramsValueArray?.find((val) => val === value);
+
+      delete paramsObj.page;
 
       if (index >= 0 && !valueExists) {
         return {
@@ -88,14 +95,6 @@ function Overview() {
           ...paramsObj,
         };
       }
-
-      if (pageIndex >= 0) {
-        delete paramsObj.page;
-
-        return {
-          ...paramsObj,
-        };
-      }
     });
   };
 
@@ -104,6 +103,8 @@ function Overview() {
 
     setSearchParams((prevParams) => {
       const paramsObj = Object.fromEntries(prevParams);
+
+      delete paramsObj.page;
 
       if (value === "default") {
         delete paramsObj.sort;
@@ -120,10 +121,34 @@ function Overview() {
     });
   };
 
+  const paginationHandler = function (page) {
+    setSearchParams((prevParams) => {
+      const paramsObj = Object.fromEntries(prevParams);
+
+      if (page === 1) {
+        delete paramsObj.page;
+
+        return {
+          ...paramsObj,
+        };
+      }
+
+      return {
+        ...paramsObj,
+        page: page,
+      };
+    });
+  };
+
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["allProducts", queryStr],
-    queryFn: ({ signal }) =>
-      fetchProducts({ signal, queryString: `?${queryStr}` }),
+    queryKey: ["allProducts", queryStr, gender],
+    queryFn: ({ signal }) => {
+      if (!gender) {
+        return fetchProducts({ signal, queryString: `?${queryStr}` });
+      } else {
+        return fetchProducts({ signal, gender, queryString: `?${queryStr}` });
+      }
+    },
   });
 
   const {
@@ -132,12 +157,19 @@ function Overview() {
     isError: isErrorFilters,
     error: errorFilters,
   } = useQuery({
-    queryKey: ["filters"],
-    queryFn: ({ signal }) => fetchFilters({ signal }),
+    queryKey: ["filters", gender],
+    queryFn: ({ signal }) => {
+      if (!gender) {
+        return fetchFilters({ signal });
+      } else {
+        return fetchFilters({ signal, gender });
+      }
+    },
   });
 
   let filtersContent;
   let productsContent;
+  let maxPages;
 
   if (isPending) {
     productsContent = <Placeholder message="Loading..." />;
@@ -149,7 +181,7 @@ function Overview() {
 
   if (data) {
     const products = data.data.data;
-
+    maxPages = data.data.maxPages;
     console.log(data);
 
     productsContent =
@@ -191,7 +223,13 @@ function Overview() {
         <div className={classes.overview__container__grid}>
           <SortingForm onChange={sortChangeHandler} activeSort={activeSort} />
           {productsContent}
-          <Pagination />
+          {data && (
+            <Pagination
+              maxPage={maxPages}
+              currentPage={activePage}
+              onClick={paginationHandler}
+            />
+          )}
         </div>
       </div>
     </section>

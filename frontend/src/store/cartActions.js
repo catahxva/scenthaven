@@ -5,7 +5,7 @@ export const addProductToCart = function (productObject, productsList) {
   return async function (dispatch) {
     const checkForProduct = async function () {
       const response = await fetch(
-        `http://localhost:3000/products/${productObject.id}`
+        `http://localhost:3000/products/one-product/${productObject.id}`
       );
 
       if (!response.ok) throw new Error(`Could not add to cart`);
@@ -29,7 +29,7 @@ export const addProductToCart = function (productObject, productsList) {
       const data = await checkForProduct();
       const product = data.data.data;
 
-      const prod = productsList.find((p) => p.id === productObject.id);
+      const prod = productsList?.find((p) => p.id === productObject.id);
       const prodQuantity = prod?.productQuantity;
       const stockQuantity = product.quantities.find(
         (q) => q.quantity === productObject.quantity

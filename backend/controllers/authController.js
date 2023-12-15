@@ -4,6 +4,7 @@ const crypto = require("crypto");
 
 const User = require("./../models/userModel");
 const sendEmail = require("./../util/email");
+const emailTemplate = require("./../util/emailTemplate");
 const AppError = require("../util/appError");
 
 const signToken = (id) => {
@@ -15,6 +16,8 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
+  console.log(user);
+
   user.password = undefined;
 
   res.status(statusCode).json({
@@ -22,6 +25,7 @@ const createSendToken = (user, statusCode, res) => {
     token,
     username: user.userName,
     address: user.address,
+    email: user.email,
   });
 };
 
@@ -38,12 +42,17 @@ exports.signUp = async function (req, res, next) {
 
     await newUser.save({ validateBeforeSave: false });
 
-    const message = `${verificationToken}`;
+    const preheaderText = "Verify your account";
+    const message = `This email was sent to you so you can verify your account created at Scent Haven. If you did not create an account please ignore this email. If the button below does not work, please use this link:`;
+    const ctaLink = `http://localhost:5173/auth-verify/${verificationToken}`;
+    const ctaText = `Verify`;
+
+    const html = emailTemplate(preheaderText, message, ctaText, ctaLink);
 
     await sendEmail({
       email: newUser.email,
       subject: "Verify Email",
-      message,
+      html,
     });
 
     res.status(200).json({
@@ -113,12 +122,17 @@ exports.forgotPassword = async function (req, res, next) {
 
     await user.save({ validateBeforeSave: false });
 
-    const message = `${resetToken}`;
+    const preheaderText = "Reset your password";
+    const message = `Click on the button below to reset the password for your account on Scent Haven. If you did not try to reset your password, please ignore this email. If the button below did not work, please access this link: `;
+    const ctaText = "Reset password";
+    const ctaLink = `http://localhost:5173/auth/${resetToken}?mode=forgotReset`;
+
+    const html = emailTemplate(preheaderText, message, ctaText, ctaLink);
 
     await sendEmail({
       email: user.email,
       subject: "Password Reset",
-      message,
+      html,
     });
 
     res.status(200).json({

@@ -37,6 +37,7 @@ function Authentication() {
           expiration: actionData[1],
           userName: actionData[2],
           address: actionData[3],
+          email: actionData[4],
         })
       );
 
@@ -148,22 +149,22 @@ export async function action({ request, params }) {
     );
   }
 
-  const { token, username, address } = await response.json();
+  const { token, username, address, email } = await response.json();
   const expiration = new Date();
   expiration.setDate(expiration.getDate() + 90);
 
   if (mode === "signup" || mode === "forgot") return redirect("/auth-message");
 
   if (mode === "login" && token) {
-    return [token, expiration.toISOString(), username, address];
+    return [token, expiration.toISOString(), username, address, email];
   }
 
   if (mode === "reset" && token) {
-    return [token, expiration.toISOString(), username, address];
+    return [token, expiration.toISOString(), username, address, email];
   }
 
   if (mode === "forgotReset" && token) {
-    return [token, expiration.toISOString(), username, address];
+    return [token, expiration.toISOString(), username, address, email];
   }
 }
 

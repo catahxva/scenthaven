@@ -1,4 +1,4 @@
-exports.createFilters = (query) => {
+exports.createFilters = (query, gender) => {
   const filters = {};
 
   if (query.search) {
@@ -21,10 +21,14 @@ exports.createFilters = (query) => {
     };
   }
 
-  if (query.gender) {
+  if (query.gender && !gender) {
     filters.gender = {
       $in: query.gender.split(",").map((g) => new RegExp(g, "i")),
     };
+  }
+
+  if (!query.gender && gender) {
+    filters.gender = gender;
   }
 
   if (query.minimum && query.maximum) {
@@ -76,7 +80,7 @@ exports.createPagination = (query) => {
   }
 
   if (query.page) {
-    skip = query.page * 10 - limit;
+    skip = query.page * 15 - limit;
   }
 
   return [skip, limit];

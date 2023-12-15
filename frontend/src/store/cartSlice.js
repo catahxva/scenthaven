@@ -79,7 +79,7 @@ export const cartMiddleware = (store) => (next) => (action) => {
   }
 
   if (cartActions.clearCart.match(action)) {
-    localStorage.removeItem(`item`);
+    localStorage.removeItem(`items`);
   }
 
   return result;

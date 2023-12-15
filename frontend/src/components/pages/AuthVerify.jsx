@@ -23,7 +23,13 @@ function AuthVerify() {
 
     if (actionData !== undefined) {
       dispatch(
-        authActions.login({ token: actionData[0], expiration: actionData[1] })
+        authActions.login({
+          token: actionData[0],
+          expiration: actionData[1],
+          userName: actionData[2],
+          address: actionData[3],
+          email: actionData[4],
+        })
       );
 
       navigate("/");
@@ -66,12 +72,12 @@ export async function action({ params }) {
     );
   }
 
-  const { token: userToken, username } = res;
+  const { token: userToken, username, address, email } = res;
 
   const expiration = new Date();
   expiration.setDate(expiration.getDate() + 90);
 
-  return [userToken, expiration.toISOString(), username];
+  return [userToken, expiration.toISOString(), username, address, email];
 }
 
 export default AuthVerify;

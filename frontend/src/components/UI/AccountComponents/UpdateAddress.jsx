@@ -1,10 +1,9 @@
 import classes from "./UpdateAddress.module.css";
 
 import { forwardRef, useRef, useImperativeHandle, useState } from "react";
-import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 import { updateUserAddress, queryClient } from "../../../util/utilities";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/authSlice";
 
 const UpdateAddress = forwardRef(function ({ address }, ref) {
@@ -26,6 +25,8 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
   const [buttonText, setButtonText] = useState("Submit");
 
   const token = useSelector((state) => state.auth.token);
+
+  const addressTest = useSelector((state) => state.auth.address);
 
   const { mutate } = useMutation({
     mutationFn: updateUserAddress,
@@ -58,6 +59,7 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
 
   const closeHandler = function () {
     dialog.current.close();
+    console.log(addressTest);
     setContentState("normal");
     queryClient.invalidateQueries([`userData`, token]);
   };

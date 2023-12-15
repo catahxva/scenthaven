@@ -5,10 +5,13 @@ const {
 } = require("../util/APIFeatures");
 const Product = require("../models/productModel");
 const AppError = require("../util/appError");
+const Orders = require("../models/orderModel");
 
 exports.getAllProducts = async function (req, res, next) {
   try {
-    const filters = createFilters(req.query);
+    const { gender } = req.params;
+
+    const filters = createFilters(req.query, gender);
     const sortCriteria = createSort(req.query);
     const [skip, limit] = createPagination(req.query);
 
@@ -37,44 +40,37 @@ exports.getAllProducts = async function (req, res, next) {
 
 exports.getFilters = async function (req, res, next) {
   try {
-    const paramGender = req.params.gender;
+    const { gender } = req.params;
 
-    const brandValues = await Product.distinct("brand");
+    let brandValues;
+    let concentrationValues;
+
+    if (!gender) {
+      brandValues = await Product.distinct("brand");
+      concentrationValues = await Product.distinct("concentration");
+    }
+    if (gender) {
+      brandValues = await Product.distinct("brand", { gender: gender });
+      concentrationValues = await Product.distinct("concentration", {
+        gender: gender,
+      });
+    }
 
     const genderValues = await Product.distinct("gender");
-    const concentrationValues = await Product.distinct("concentration");
-
-    const result = await Product.aggregate([
-      { $unwind: "$quantities" },
-      {
-        $group: {
-          _id: null,
-          maxPrice: { $max: "$quantities.price" },
-          minPrice: { $min: "$quantities.price" },
-        },
-      },
-    ]);
-
-    const priceRange = {
-      maxPrice: result[0].maxPrice,
-      minPrice: result[0].minPrice,
-    };
 
     let data;
 
-    if (!paramGender)
+    if (!gender)
       data = {
         brandValues,
         genderValues,
         concentrationValues,
-        priceRange,
       };
 
-    if (paramGender)
+    if (gender)
       data = {
         brandValues,
         concentrationValues,
-        priceRange,
       };
 
     res.status(200).json({
@@ -103,6 +99,8 @@ exports.getOneProduct = async function (req, res, next) {
       product = doc;
     }
 
+    console.log(product);
+
     res.status(200).json({
       status: "success",
       data: {
@@ -110,6 +108,7 @@ exports.getOneProduct = async function (req, res, next) {
       },
     });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
@@ -129,6 +128,14 @@ exports.getCartProducts = async function (req, res, next) {
           return {
             notFound: true,
             itemId: item.id,
+          };
+        }
+
+        if (!foundItem.name) {
+          return {
+            validationError: true,
+            itemId: item.id,
+            validationErrorMessage: "Name is required",
           };
         }
 
@@ -152,8 +159,14 @@ exports.getCartProducts = async function (req, res, next) {
     // index fo the current element to gets its equivalent from
     // the cartItems array.
     const newCartItems = cartItemsDB.map((cartItem, index) => {
-      if (cartItem.notFound === true || cartItem.error === true)
+      if (
+        cartItem.notFound === true ||
+        cartItem.error === true ||
+        cartItem.validationError === true
+      ) {
+        console.log(cartItem);
         return cartItem;
+      }
 
       // getting the current object from the cartItems array based
       // on the current index.
@@ -214,7 +227,10 @@ exports.getCartProducts = async function (req, res, next) {
     });
   } catch (err) {
     // sending any error further to our global error handler.
-    next(err);
+    res.status(400).json({
+      status: "error",
+      data: err,
+    });
   }
 };
 

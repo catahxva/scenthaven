@@ -20,10 +20,18 @@ function Navigation() {
           ScentHaven
         </Link>
         <div className={classes.nav__container}>
-          <Link className={classes.nav__link}>Shop All</Link>
-          <Link className={classes.nav__link}>Unisex</Link>
-          <Link className={classes.nav__link}>Men's</Link>
-          <Link className={classes.nav__link}>Women's</Link>
+          <Link to="/overview" className={classes.nav__link}>
+            Shop All
+          </Link>
+          <Link to="/overview/unisex" className={classes.nav__link}>
+            Unisex
+          </Link>
+          <Link to="/overview/men's" className={classes.nav__link}>
+            Men's
+          </Link>
+          <Link to="/overview/women's" className={classes.nav__link}>
+            Women's
+          </Link>
         </div>
         <div className={classes.nav__container}>
           <Link to="/search">

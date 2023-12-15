@@ -22,6 +22,7 @@ import Search from "./components/pages/Search";
 import OrderMessage from "./components/pages/OrderMessage";
 
 import { queryClient } from "./util/utilities";
+import OrderPage from "./components/pages/OrderPage";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/overview",
+        path: "/overview/:gender?",
         element: <Overview />,
       },
       {
@@ -69,10 +70,6 @@ const router = createBrowserRouter([
         element: <Account />,
       },
       {
-        path: "/logout",
-        loader: logoutLoader,
-      },
-      {
         path: "/search",
         element: <Search />,
       },
@@ -80,11 +77,19 @@ const router = createBrowserRouter([
         path: "/order-message",
         element: <OrderMessage />,
       },
+      {
+        path: "/order/:id",
+        element: <OrderPage />,
+      },
     ],
   },
   {
     path: "/payment",
     element: <Payment />,
+  },
+  {
+    path: "/logout",
+    loader: logoutLoader,
   },
 ]);
 

@@ -4,9 +4,11 @@ const token = JSON.parse(localStorage.getItem(`token`));
 const expiration = JSON.parse(localStorage.getItem("expiration"));
 const userName = JSON.parse(localStorage.getItem("userName"));
 const address = JSON.parse(localStorage.getItem("address"));
+const email = JSON.parse(localStorage.getItem(`email`));
 
 const initialAuthState = {
   token,
+  email,
   expiration,
   isAuthenticated: token ? true : false,
   userName,
@@ -19,6 +21,7 @@ export const authSlice = createSlice({
   reducers: {
     login(state, action) {
       state.token = action.payload.token;
+      state.email = action.payload.email;
       state.expiration = action.payload.expiration;
       state.isAuthenticated = true;
       state.userName = action.payload.userName;
@@ -26,12 +29,14 @@ export const authSlice = createSlice({
     },
     logout(state) {
       state.token = undefined;
+      state.email = action.payload.email;
       state.expiration = undefined;
       state.isAuthenticated = false;
       state.userName = undefined;
       state.address = undefined;
     },
     saveAddress(state, action) {
+      console.log(action.payload);
       state.address = action.payload.address;
     },
   },
@@ -56,6 +61,7 @@ export const authMiddleware = (store) => (next) => (action) => {
       `address`,
       JSON.stringify(store.getState().auth.address)
     );
+    localStorage.setItem(`email`, JSON.stringify(store.getState().auth.email));
   }
 
   if (authActions.saveAddress.match(action)) {
@@ -67,6 +73,7 @@ export const authMiddleware = (store) => (next) => (action) => {
 
   if (authActions.logout.match(action)) {
     localStorage.removeItem(`token`);
+    localStorage.removeItem(`email`);
     localStorage.removeItem(`expiration`);
     localStorage.removeItem(`userName`);
     localStorage.removeItem(`address`);

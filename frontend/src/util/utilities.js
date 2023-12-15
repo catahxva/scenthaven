@@ -2,10 +2,16 @@ import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient();
 
-export const fetchProducts = async function ({ signal, queryString }) {
-  const url = queryString
-    ? `http://localhost:3000/products${queryString}`
-    : `http://localhost:3000/products`;
+export const fetchProducts = async function ({ signal, gender, queryString }) {
+  let url;
+
+  if (!queryString && !gender) url = `http://localhost:3000/products`;
+
+  if (queryString && !gender)
+    url = `http://localhost:3000/products${queryString}`;
+
+  if (queryString && gender)
+    url = `http://localhost:3000/products/${gender}${queryString}`;
 
   const response = await fetch(url, {
     signal,
@@ -19,8 +25,12 @@ export const fetchProducts = async function ({ signal, queryString }) {
   return data;
 };
 
-export const fetchFilters = async function ({ signal }) {
-  const response = await fetch(`http://localhost:3000/products/get-filters`, {
+export const fetchFilters = async function ({ signal, gender }) {
+  const url = gender
+    ? `http://localhost:3000/products/get-filters/${gender}`
+    : `http://localhost:3000/products/get-filters`;
+
+  const response = await fetch(url, {
     signal,
   });
 
@@ -32,13 +42,18 @@ export const fetchFilters = async function ({ signal }) {
 };
 
 export const fetchOneProduct = async function ({ signal, id }) {
-  const response = await fetch(`http://localhost:3000/products/${id}`, {
-    signal,
-  });
+  console.log(id);
+  const response = await fetch(
+    `http://localhost:3000/products/one-product/${id}`,
+    {
+      signal,
+    }
+  );
 
-  if (!response.ok)
+  if (!response.ok) {
+    console.log(await response.json());
     throw new Error("An error occurred when fetching this product.");
-
+  }
   const data = await response.json();
 
   return data;
@@ -54,8 +69,10 @@ export const fetchCartProducts = async function ({ signal, items }) {
     },
   });
 
-  if (!response.ok)
+  if (!response.ok) {
+    console.log(await response.json());
     throw new Error(`Could not get cart products, please try again.`);
+  }
 
   const data = await response.json();
 
@@ -244,11 +261,37 @@ export const getPaymentIntent = async function ({
     }
   );
 
-  if (!response.ok) throw new Error("There has been an error.");
+  if (!response.ok) {
+    console.log(await response.json());
+    throw new Error("There has been an error.");
+  }
 
   const { clientSecret } = await response.json();
 
   return clientSecret;
+};
+
+export const getOrders = async function ({ signal, email }) {
+  if (!email) throw new Error(`You must provide a valid email`);
+
+  const response = await fetch(`http://localhost:3000/orders`, {
+    signal,
+    method: "POST",
+    body: JSON.stringify({ email }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("There was a problem with getting your orders");
+  }
+
+  const data = await response.json();
+
+  console.log(data);
+
+  return data;
 };
 
 export function calculateRatingPercentages(reviews) {

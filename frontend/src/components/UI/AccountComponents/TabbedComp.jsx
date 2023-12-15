@@ -2,7 +2,11 @@ import { useState } from "react";
 
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { getUserAccount, getFavorites } from "../../../util/utilities";
+import {
+  getUserAccount,
+  getFavorites,
+  getOrders,
+} from "../../../util/utilities";
 
 import classes from "./TabbedComp.module.css";
 
@@ -10,8 +14,10 @@ import TabbedButton from "./TabbedButton";
 import Placeholder from "../Placeholder";
 import AccountData from "./AccountData";
 import Favorites from "./Favorites";
+import Orders from "./Orders";
 
 function TabbedComp() {
+  const email = useSelector((state) => state.auth.email);
   const token = useSelector((state) => state.auth.token);
   const [enabledQuery, setEnabledQuery] = useState();
 
@@ -46,20 +52,32 @@ function TabbedComp() {
     enabled: enabledQuery === "favorites",
   });
 
+  const {
+    data: ordersData,
+    isLoading: ordersLoading,
+    isError: ordersIsError,
+    error: ordersError,
+  } = useQuery({
+    queryKey: [`userOrders`, email],
+    queryFn: ({ signal }) => getOrders({ signal, email }),
+    enabled: enabledQuery === "orders",
+  });
+
   let content;
   let errorMessage;
 
   if (activeTab === "data") errorMessage = userError?.message;
   if (activeTab === "favorites") errorMessage = favoritesError?.message;
-  if (activeTab === "orders") errorMessage = favoritesError?.message;
+  if (activeTab === "orders") errorMessage = ordersError?.message;
 
-  if (userPending || favoritesLoading) {
+  if (userPending || favoritesLoading || ordersLoading) {
     content = <Placeholder message="Loading..." />;
   }
 
   if (
     (userIsError && activeTab === "data") ||
-    (favoritesIsError && activeTab === "favorites")
+    (favoritesIsError && activeTab === "favorites") ||
+    (ordersIsError && activeTab === "orders")
   ) {
     content = <Placeholder type="error" message={errorMessage} />;
   }
@@ -72,9 +90,15 @@ function TabbedComp() {
 
   if (favoritesData && activeTab === "favorites") {
     const favoritesList = favoritesData.data.data;
-    console.log(favoritesList);
 
     content = <Favorites favorites={favoritesList} />;
+  }
+
+  if (ordersData && activeTab === "orders") {
+    const ordersList = ordersData.data.data;
+    console.log(ordersList);
+
+    content = <Orders orders={ordersList} />;
   }
 
   return (

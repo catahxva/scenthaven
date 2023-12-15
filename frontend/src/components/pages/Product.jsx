@@ -30,11 +30,11 @@ const ProductIdContextProvider = function ({ children, id }) {
 };
 
 function Product() {
+  const { id } = useParams();
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  const { id } = useParams();
+  }, [id]);
 
   const { data } = useQuery({
     queryKey: ["product", id],

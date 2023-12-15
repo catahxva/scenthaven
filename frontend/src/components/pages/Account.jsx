@@ -13,8 +13,6 @@ function Account() {
 
   const token = useSelector((state) => state.auth.token);
 
-  console.log(token);
-
   const { username } = useParams();
   const navigate = useNavigate();
 

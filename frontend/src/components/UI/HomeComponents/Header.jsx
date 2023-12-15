@@ -21,8 +21,12 @@ function Header() {
             captivates hearts, and defines your unique essence.
           </p>
           <div className={classes.header__container__buttons}>
-            <Link className={classes.header__link}>Shop Now</Link>
-            <Link className={classes.header__link__text}>Register</Link>
+            <Link to="/overview" className={classes.header__link}>
+              Shop Now
+            </Link>
+            <Link to="/auth?mode=signup" className={classes.header__link__text}>
+              Register
+            </Link>
           </div>
         </div>
       </div>

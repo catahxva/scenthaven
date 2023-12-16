@@ -4,6 +4,12 @@
   column-gap: 10rem;
 }
 
+@media screen and (max-width: 928px) {
+  .promo {
+    column-gap: 5rem;
+  }
+}
+
 .promo__container {
   height: 60rem;
   border-radius: 2rem;

@@ -294,6 +294,24 @@ export const getOrders = async function ({ signal, email }) {
   return data;
 };
 
+export const fetchOneOrder = async function ({ signal, id }) {
+  if (!id) {
+    console.log("NO ID");
+    throw new Error("You must provide a valid id for your order");
+  }
+  const response = await fetch(`http://localhost:3000/orders/one-order/${id}`, {
+    signal,
+  });
+
+  if (!response.ok) {
+    console.log(await response.json());
+    throw new Error("There has been an error with getting your order");
+  }
+  const data = await response.json();
+
+  return data;
+};
+
 export function calculateRatingPercentages(reviews) {
   const ratingCounts = {};
 

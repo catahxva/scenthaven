@@ -1,0 +1,12 @@
+.address__title {
+  font-size: 2.6rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 1.2rem;
+}
+
+.address__span {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}

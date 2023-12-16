@@ -41,7 +41,7 @@ function ProductInfo({ product }) {
 
   const productPrice =
     selectedQuantityIndex !== null
-      ? `${inStockQuantities[selectedQuantityIndex].price}$`
+      ? `${inStockQuantities[selectedQuantityIndex]?.price}$`
       : "Select a quantity";
 
   let faveList;

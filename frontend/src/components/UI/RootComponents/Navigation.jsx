@@ -1,10 +1,23 @@
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 import { Link } from "react-router-dom";
+
+import MobileNavigation from "./MobileNavigation";
 
 import classes from "./Navigation.module.css";
 
 function Navigation() {
+  const [mobileNavActive, setMobileNavActive] = useState(false);
+
+  const openMobileHandler = function () {
+    setMobileNavActive(true);
+  };
+
+  const closeMobileHandler = function () {
+    setMobileNavActive(false);
+  };
+
   const username = useSelector((state) => state.auth.userName);
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
@@ -19,7 +32,9 @@ function Navigation() {
         <Link to="/" className={classes.nav__logo}>
           ScentHaven
         </Link>
-        <div className={classes.nav__container}>
+        <div
+          className={`${classes.nav__container} ${classes.nav__container__hidden}`}
+        >
           <Link to="/overview" className={classes.nav__link}>
             Shop All
           </Link>
@@ -71,18 +86,46 @@ function Navigation() {
               </span>
             </div>
           </Link>
+          <button
+            className={`${classes.nav__menu}`}
+            onClick={openMobileHandler}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className={`w-6 h-6 ${classes.nav__svg}`}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
           {!isAuth && (
             <>
-              <Link className={classes.nav__link} to="/auth?mode=signup">
+              <Link
+                className={`${classes.nav__link} ${classes.nav__link__hidden}`}
+                to="/auth?mode=signup"
+              >
                 Sign Up
               </Link>
-              <Link className={classes.nav__link} to="/auth?mode=login">
+              <Link
+                className={`${classes.nav__link} ${classes.nav__link__hidden}`}
+                to="/auth?mode=login"
+              >
                 Login
               </Link>
             </>
           )}
           {isAuth && (
-            <Link to={`/account/${username}`}>
+            <Link
+              to={`/account/${username}`}
+              className={classes.nav__link__hidden}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -101,6 +144,7 @@ function Navigation() {
           )}
         </div>
       </nav>
+      <MobileNavigation active={mobileNavActive} onClick={closeMobileHandler} />
     </div>
   );
 }

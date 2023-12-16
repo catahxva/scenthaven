@@ -5,7 +5,6 @@ const {
 } = require("../util/APIFeatures");
 const Product = require("../models/productModel");
 const AppError = require("../util/appError");
-const Orders = require("../models/orderModel");
 
 exports.getAllProducts = async function (req, res, next) {
   try {
@@ -98,8 +97,6 @@ exports.getOneProduct = async function (req, res, next) {
     } else {
       product = doc;
     }
-
-    console.log(product);
 
     res.status(200).json({
       status: "success",

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Products = require("./productModel");
 
 const orderSchema = new mongoose.Schema(
   {
@@ -12,6 +13,11 @@ const orderSchema = new mongoose.Schema(
     },
     products: [
       {
+        productId: {
+          type: mongoose.Schema.ObjectId,
+          ref: "Product",
+          required: true,
+        },
         productQuantity: {
           type: Number,
           required: true,
@@ -77,6 +83,29 @@ const orderSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+orderSchema.post("save", function () {
+  const products = this.products;
+
+  products.forEach(async (product) => {
+    const productDB = await Products.findById(product.productId);
+
+    if (!productDB) {
+      console.log("No product found");
+      return;
+    }
+
+    const selectedQuantityIndex = productDB.quantities.findIndex((quantity) => {
+      return quantity.quantity === product.quantity;
+    });
+
+    productDB.quantities[selectedQuantityIndex].stock =
+      productDB.quantities[selectedQuantityIndex].stock -
+      product.productQuantity;
+
+    productDB.save({ validateBeforeSave: false });
+  });
+});
 
 const Orders = mongoose.model("Orders", orderSchema);
 

@@ -6,7 +6,7 @@ import { updateUserAddress, queryClient } from "../../../util/utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/authSlice";
 
-const UpdateAddress = forwardRef(function ({ address }, ref) {
+const UpdateAddress = forwardRef(function (props, ref) {
   const dialog = useRef();
   const nameRef = useRef();
   const emailRef = useRef();
@@ -26,7 +26,7 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
 
   const token = useSelector((state) => state.auth.token);
 
-  const addressTest = useSelector((state) => state.auth.address);
+  const address = useSelector((state) => state.auth.address);
 
   const { mutate } = useMutation({
     mutationFn: updateUserAddress,
@@ -59,7 +59,7 @@ const UpdateAddress = forwardRef(function ({ address }, ref) {
 
   const closeHandler = function () {
     dialog.current.close();
-    console.log(addressTest);
+    // console.log(addressTest);
     setContentState("normal");
     queryClient.invalidateQueries([`userData`, token]);
   };

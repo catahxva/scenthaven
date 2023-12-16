@@ -83,7 +83,7 @@ function AccountData({ accountData }) {
         <button onClick={openHandler} className={classes.account__address__btn}>
           Modify address
         </button>
-        <UpdateAddress address={address} ref={updateAddressRef} />
+        <UpdateAddress ref={updateAddressRef} />
       </div>
     </div>
   );

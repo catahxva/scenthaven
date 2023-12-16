@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import classes from "./ProductImages.module.css";
 
+import { useParams } from "react-router-dom";
+
 function ProductImages({ imagesArray, name }) {
+  const { id } = useParams();
+
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  useEffect(() => {
+    setSelectedImageIndex(0);
+  }, [id]);
 
   const changeImageHandler = function (index) {
     setSelectedImageIndex(index);

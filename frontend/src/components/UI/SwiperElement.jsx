@@ -12,6 +12,17 @@ function SwiperElement({ data }) {
       keyboard
       spaceBetween={30}
       slidesPerView={4}
+      breakpoints={{
+        1070: {
+          slidesPerView: 4,
+        },
+        815: {
+          slidesPerView: 3,
+        },
+        500: {
+          slidesPerView: 2,
+        },
+      }}
     >
       {data.map((product) => {
         return (

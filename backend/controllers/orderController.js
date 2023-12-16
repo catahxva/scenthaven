@@ -5,6 +5,9 @@ const stripe = require("stripe")(
   "sk_test_51OFgTpANFg5WW6bUiQj8KQ643R0CiLDjwfZCDgrzTtvDNvYPrXfvriFMchR326MZT1GznzZu885DcmweTe5YJtLN00xuqU7W7x"
 );
 
+const sendEmail = require("../util/email");
+const emailTemplate = require("../util/emailTemplate");
+
 exports.createPaymentIntent = async function (req, res, next) {
   try {
     const { shipping: shippingInfo } = req.body;
@@ -38,6 +41,7 @@ exports.createPaymentIntent = async function (req, res, next) {
 
     const productsForOrder = productsFromDB.map((product, i) => {
       return {
+        productId: product._id,
         productQuantity: requestProducts[i].productQuantity,
         quantity: product.quantities.filter((q) => {
           return q.quantity === requestProducts[i].quantity;
@@ -71,11 +75,25 @@ exports.createPaymentIntent = async function (req, res, next) {
       },
     });
 
-    await Orders.create({
+    const newOrder = await Orders.create({
       user: req.user?._id,
       products: productsForOrder,
-      address: productsFromDB,
+      address: shippingInfo,
       total,
+    });
+
+    const preheaderText = "Order confirmation";
+    const message =
+      "Your order has been created and we are going to deliver it to you soon! Click on the button below to see your order";
+    const ctaText = "See order";
+    const ctaLink = `http://localhost:5173/order/${newOrder._id}`;
+
+    const html = emailTemplate(preheaderText, message, ctaText, ctaLink);
+
+    await sendEmail({
+      email: email,
+      subject: "Order confirmation",
+      html,
     });
 
     res.status(200).json({
@@ -91,9 +109,7 @@ exports.getOrders = async function (req, res, next) {
   try {
     const { email } = req.body;
 
-    const orders = await Orders.find({
-      $or: [{ "address.email": email }, { user: req.user?._id }],
-    });
+    const orders = await Orders.find({ "address.email": email });
 
     res.status(200).json({
       status: "success",
@@ -103,6 +119,25 @@ exports.getOrders = async function (req, res, next) {
     });
   } catch (err) {
     console.log(err);
+    next(err);
+  }
+};
+
+exports.getOneOrder = async function (req, res, next) {
+  try {
+    const order = await Orders.findById(req.params.id);
+
+    if (!order) {
+      return next(new AppError("No order found with this ID.", 404));
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        data: order,
+      },
+    });
+  } catch (err) {
     next(err);
   }
 };

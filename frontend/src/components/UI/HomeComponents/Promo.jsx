@@ -6,7 +6,7 @@ function Promo() {
       <div className={classes.promo__container}>
         <img src="/info.jpg" className={classes.promo__img} />
       </div>
-      <div>
+      <div className={classes.promo__container__text}>
         <h2 className={classes.promo__title}>
           Scent Haven: Unveil the Art of Fragrance
         </h2>

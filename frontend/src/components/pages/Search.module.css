@@ -17,6 +17,12 @@
   transition: all 0.5s;
 }
 
+@media screen and (max-width: 730px) {
+  .search__form {
+    width: 100%;
+  }
+}
+
 .search__input:focus {
   outline: none;
   border: 1px solid #f03e3e;
@@ -41,6 +47,27 @@
 
 .search__span {
   font-size: 2rem;
+}
+
+@media screen and (max-width: 410px) {
+  .search__input {
+    padding: 0.8rem 1.2rem;
+    font-size: 1.6rem;
+  }
+
+  .search__span {
+    font-size: 1.6rem;
+  }
+
+  .search__btn {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .search__svg {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 .search__grid {

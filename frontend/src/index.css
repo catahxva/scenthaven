@@ -28,6 +28,12 @@ section {
   }
 }
 
+@media screen and (max-width: 691px) {
+  section {
+    padding: 6rem 5rem;
+  }
+}
+
 h2 {
   font-size: 3.2rem;
   margin-bottom: 3rem;
@@ -95,5 +101,15 @@ h3 {
 
   p {
     font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  h3 {
+    font-size: 1.8rem;
   }
 }

@@ -76,11 +76,18 @@
   }
 
   .account__flex__column {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20.2rem, 1fr));
+    justify-items: center;
+    justify-content: space-between;
+    align-items: start;
+    gap: 2rem;
+    grid-row: 2 / 3;
+    /* flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     gap: 2rem;
-    grid-row: 2 / 3;
+    grid-row: 2 / 3; */
   }
 
   .account__feat {
@@ -105,5 +112,20 @@
 
   .account__feat__par {
     font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .account__svg {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .account__feat__title {
+    font-size: 1.4rem;
+  }
+
+  .account__feat__par {
+    font-size: 1.2rem;
   }
 }

@@ -61,6 +61,26 @@
   }
 }
 
+@media screen and (max-width: 691px) {
+  .header__text {
+    width: 70%;
+  }
+
+  .header__container__text {
+    margin-top: 18rem;
+  }
+
+  .header {
+    height: 85vh;
+  }
+}
+
+@media screen and (max-width: 604px) {
+  .header__text {
+    width: 90%;
+  }
+}
+
 .header__p {
   font-size: 1.6rem;
   font-weight: 300;
@@ -95,4 +115,34 @@
   font-size: 1.8rem;
   color: inherit;
   font-weight: 300;
+}
+
+@media screen and (max-width: 510px) {
+  .header__title {
+    font-size: 2.8rem;
+  }
+
+  .header__p {
+    font-size: 1.4rem;
+  }
+
+  .header__container__buttons {
+    gap: 1.5rem;
+  }
+
+  .header__link:link,
+  .header__link:visited {
+    font-size: 1.8rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .header__link__text {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .header__text {
+    width: 100%;
+  }
 }

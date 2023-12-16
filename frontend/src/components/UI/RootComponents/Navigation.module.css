@@ -92,6 +92,22 @@
   color: #333 !important;
 }
 
+@media screen and (max-width: 410px) {
+  .nav__svg {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .nav__link__cart__deco {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .nav__link__cart__deco__number {
+    font-size: 1rem;
+  }
+}
+
 .nav__svg__mobile {
   display: none;
   visibility: hidden;

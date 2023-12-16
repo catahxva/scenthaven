@@ -19,8 +19,11 @@ function SwiperElement({ data }) {
         815: {
           slidesPerView: 3,
         },
-        500: {
+        561: {
           slidesPerView: 2,
+        },
+        100: {
+          slidesPerView: 1,
         },
       }}
     >

@@ -28,6 +28,18 @@
   transition: all 0.5s;
 }
 
+@media screen and (max-width: 550px) {
+  .mobile__nav {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .mobile__nav {
+    width: 100%;
+  }
+}
+
 .mobile__nav__active {
   transform: translateX(0%);
 }

@@ -3,6 +3,12 @@
   margin-bottom: 2rem;
 }
 
+/* @media screen and (max-width: 620px) {
+  .checkout__form {
+    grid-row: 2 / 3;
+  }
+} */
+
 .checkout__form__group {
   margin-bottom: 2rem;
 }

@@ -5,3 +5,14 @@
   justify-content: space-between;
   gap: 5rem;
 }
+
+@media screen and (max-width: 620px) {
+  .checkout__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .checkout__form__mobile {
+    grid-row: 2 / 3;
+  }
+}

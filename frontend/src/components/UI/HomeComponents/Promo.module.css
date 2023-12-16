@@ -23,6 +23,16 @@
   object-fit: cover;
 }
 
+@media screen and (max-width: 691px) {
+  .promo__container {
+    display: none;
+  }
+
+  .promo__container__text {
+    grid-column: 1 / 3;
+  }
+}
+
 .promo__title {
   position: relative;
 }

@@ -23,7 +23,7 @@ function CartCheckout() {
   return (
     <section className="first__section">
       <div className={classes.checkout__grid}>
-        <div>
+        <div className={classes.checkout__form__mobile}>
           <h2>Checkout</h2>
           <FormCheckout />
         </div>

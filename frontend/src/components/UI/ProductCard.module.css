@@ -8,6 +8,12 @@
   position: relative;
 }
 
+@media screen and (max-width: 561px) {
+  .card {
+    margin: 0 auto;
+  }
+}
+
 .card__slider {
   width: 25rem;
   height: 40rem;

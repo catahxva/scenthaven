@@ -35,3 +35,13 @@
   text-decoration: none;
   text-transform: uppercase;
 }
+
+@media screen and (max-width: 410px) {
+  .footer__logo {
+    font-size: 1.8rem;
+  }
+
+  .footer__link {
+    font-size: 1.6rem;
+  }
+}

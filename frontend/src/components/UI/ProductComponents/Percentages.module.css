@@ -12,17 +12,6 @@
   margin-bottom: 0.5rem;
 }
 
-.product__add__review {
-  font-family: inherit;
-  background-color: #333;
-  color: #fff;
-  font-size: 1.4rem;
-  padding: 0.6rem 1rem;
-  border-radius: 1rem;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
 .product__rating__percentages {
   display: flex;
   flex-direction: column;
@@ -62,6 +51,59 @@
   border-radius: 0.5rem;
   position: relative;
   overflow: hidden;
+}
+
+@media screen and (max-width: 700px) {
+  .product__rating {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .product__rating__small {
+    font-size: 1.8rem;
+  }
+
+  .product__rating__star {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .product__rating__bar {
+    height: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .product__rating {
+    font-size: 3.5rem;
+  }
+
+  .product__rating__small {
+    font-size: 2rem;
+  }
+
+  .product__rating__bar {
+    width: calc(100% - 7rem);
+    background-color: #333;
+    height: 2rem;
+    border-radius: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .product__container__reviews__rating {
+    width: 9rem;
+  }
+
+  .product__rating__percentages {
+    width: calc(100% - 11rem);
+  }
+
+  .product__rating {
+    font-size: 3rem;
+  }
 }
 
 .product__rating__bar__full {

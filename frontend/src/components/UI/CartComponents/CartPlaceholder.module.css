@@ -10,3 +10,9 @@
 .cart__placeholder__link {
   color: #333;
 }
+
+@media screen and (max-width: 840px) {
+  .cart__placeholder__text {
+    font-size: 1.6rem;
+  }
+}

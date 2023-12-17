@@ -1,8 +1,10 @@
 import classes from "./AuthForm.module.css";
 
+import { useEffect, useState } from "react";
 import { Form, Link } from "react-router-dom";
 
 function AuthForm({
+  searchParams,
   isSignup,
   isLogin,
   isForgot,
@@ -13,6 +15,29 @@ function AuthForm({
   linkText,
   buttonText,
 }) {
+  const [passState, setPassState] = useState("");
+  const [passConfirmState, setPassConfirmState] = useState("");
+
+  useEffect(() => {
+    setPassState("");
+    setPassConfirmState("");
+  }, [searchParams]);
+
+  const onChange = function (e, pass) {
+    if (pass === "password") setPassState(e.target.value);
+    if (pass === "passwordConfirm") setPassConfirmState(e.target.value);
+  };
+
+  console.log(isSignup);
+
+  const enabled =
+    isSignup &&
+    passState === passConfirmState &&
+    passState !== "" &&
+    passConfirmState !== "";
+
+  console.log(enabled);
+
   return (
     <div className={classes.auth__container}>
       {isSignup && <h2>Signup</h2>}
@@ -65,6 +90,10 @@ function AuthForm({
               type="password"
               name="password"
               id="password"
+              value={passState}
+              onChange={(e) => {
+                onChange(e, "password");
+              }}
               required
               minLength={"6"}
             />
@@ -83,6 +112,10 @@ function AuthForm({
               type="password"
               name="passwordConfirm"
               id="passwordConfirm"
+              value={passConfirmState}
+              onChange={(e) => {
+                onChange(e, "passwordConfirm");
+              }}
               required
               minLength={"6"}
             />
@@ -120,7 +153,10 @@ function AuthForm({
           </div>
         )}
         <div className={classes.auth__form__container__btns}>
-          <button disabled={isSubmitting} className={classes.auth__form__btn}>
+          <button
+            disabled={isSubmitting || (!enabled && isSignup)}
+            className={classes.auth__form__btn}
+          >
             {!isSubmitting ? buttonText : "Submitting..."}
           </button>
           <Link to={linkAddress} className={classes.auth__link}>

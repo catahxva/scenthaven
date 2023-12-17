@@ -29,3 +29,35 @@
   font-family: inherit;
   cursor: pointer;
 }
+
+@media screen and (max-width: 700px) {
+  .product__all__reviews {
+    width: 50rem;
+  }
+
+  .product__all__ratings {
+    width: 60rem;
+  }
+
+  .product__reviews__more {
+    font-size: 1.6rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .product__reviews {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    row-gap: 4rem;
+  }
+
+  .product__all__reviews {
+    width: 100%;
+  }
+
+  .product__container__all__ratings {
+    width: 100% !important;
+  }
+}

@@ -17,17 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/authSlice";
 
 function Authentication() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   const actionData = useActionData();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  console.log(actionData);
 
   useEffect(() => {
     if (actionData !== undefined) {
@@ -47,6 +41,10 @@ function Authentication() {
 
   const [searchParams] = useSearchParams();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [searchParams]);
 
   const isSubmitting = navigation.state === "submitting";
 
@@ -85,6 +83,7 @@ function Authentication() {
   return (
     <section className={classes.auth__grid}>
       <AuthForm
+        searchParams={searchParams}
         isSignup={isSignup}
         isLogin={isLogin}
         isForgot={isForgot}

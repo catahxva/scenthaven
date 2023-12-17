@@ -6,6 +6,21 @@
   margin-bottom: 5rem;
 }
 
+@media screen and (max-width: 940px) {
+  .product__header {
+    grid-template-columns: 0.55fr 0.45fr;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .product__header {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    margin-bottom: 8rem;
+    /* row-gap: 2rem; */
+  }
+}
+
 .product__add__review {
   font-family: inherit;
   background-color: #333;

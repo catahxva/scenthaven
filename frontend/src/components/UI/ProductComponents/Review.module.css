@@ -69,11 +69,46 @@
   height: 2.5rem;
   color: #333;
 }
-
 .product__review__helpful__svg__active {
   color: #f03e3e;
 }
 
 .product__review__helpful__number {
   font-size: 1.8rem;
+}
+
+@media screen and (max-width: 700px) {
+  .product__review__info {
+    margin-bottom: 1.5rem;
+  }
+
+  .product__review__username {
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .product__review__rating {
+    font-size: 1.6rem;
+  }
+
+  .product__review__date {
+    font-size: 1.6rem;
+  }
+
+  .product__review__text {
+    font-size: 1.8rem;
+  }
+
+  .product__review__helpful__text {
+    font-size: 1.6rem;
+  }
+
+  .product__review__helpful__svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .product__review__helpful__number {
+    font-size: 1.4rem;
+  }
 }

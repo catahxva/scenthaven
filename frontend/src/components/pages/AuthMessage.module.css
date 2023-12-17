@@ -6,6 +6,7 @@
   justify-content: center;
   gap: 1rem;
   min-height: 100vh;
+  text-align: center;
 }
 
 .auth__message__text {
@@ -20,4 +21,24 @@
 .auth__message__link {
   font-size: 2.4rem;
   color: #333;
+}
+
+@media screen and (max-width: 840px) {
+  .auth__message__text {
+    font-size: 2rem;
+  }
+
+  .auth__message__link {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 621px) {
+  .auth__message__text {
+    font-size: 1.6rem;
+  }
+
+  .auth__message__link {
+    font-size: 1.6rem;
+  }
 }

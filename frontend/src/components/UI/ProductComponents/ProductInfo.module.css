@@ -178,3 +178,60 @@
   width: calc(100% - 17rem);
   font-weight: 400;
 }
+
+@media screen and (max-width: 940px) {
+  .product__svg__fave {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .product__svg__loading {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .product__brand {
+    font-size: 1.6rem;
+  }
+
+  .product__concentration {
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .product__container__rating {
+    margin-bottom: 2rem;
+  }
+
+  .product__star {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .product__reviews__number {
+    font-size: 2rem;
+  }
+
+  .product__price {
+    font-size: 2rem;
+  }
+
+  .product__no__rating {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .product__notes {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .product__notes__title {
+    width: 12rem;
+  }
+
+  .product__notes {
+    width: calc(100% - 14rem);
+  }
+}

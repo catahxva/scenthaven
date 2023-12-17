@@ -13,3 +13,15 @@
 .auth__verify__text::after {
   content: none;
 }
+
+@media screen and (max-width: 840px) {
+  .auth__verify__text {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 621px) {
+  .auth__verify__text {
+    font-size: 1.6rem;
+  }
+}

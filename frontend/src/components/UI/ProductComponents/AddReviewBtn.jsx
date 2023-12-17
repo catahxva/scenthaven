@@ -1,4 +1,4 @@
-import classes from "../../pages/Product.module.css";
+import classes from "./AddReviewBtn.module.css";
 
 function AddReviewBtn({ onClick }) {
   return (

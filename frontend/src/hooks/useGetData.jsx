@@ -25,8 +25,6 @@ export default function useGetData({
 
   if (data) nestedData = data.data.data;
 
-  if (dataType === "swiper") console.log(nestedData);
-
   let content;
 
   if (isPending) content = <Placeholder message="Loading..." />;

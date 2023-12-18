@@ -109,7 +109,17 @@ exports.getOrders = async function (req, res, next) {
   try {
     const { email } = req.body;
 
-    const orders = await Orders.find({ "address.email": email });
+    let filtersObj;
+
+    if (req.user) {
+      filtersObj = {
+        $or: [{ "address.email": email }, { user: req.user._id }],
+      };
+    }
+
+    if (!req.user) filtersObj = { "address.email": email };
+
+    const orders = await Orders.find(filtersObj);
 
     res.status(200).json({
       status: "success",
@@ -118,7 +128,6 @@ exports.getOrders = async function (req, res, next) {
       },
     });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };

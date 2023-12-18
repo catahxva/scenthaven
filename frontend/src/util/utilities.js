@@ -42,7 +42,6 @@ export const fetchFilters = async function ({ signal, gender }) {
 };
 
 export const fetchOneProduct = async function ({ signal, id }) {
-  console.log(id);
   const response = await fetch(
     `http://localhost:3000/products/one-product/${id}`,
     {
@@ -51,7 +50,6 @@ export const fetchOneProduct = async function ({ signal, id }) {
   );
 
   if (!response.ok) {
-    console.log(await response.json());
     throw new Error("An error occurred when fetching this product.");
   }
   const data = await response.json();
@@ -70,7 +68,6 @@ export const fetchCartProducts = async function ({ signal, items }) {
   });
 
   if (!response.ok) {
-    console.log(await response.json());
     throw new Error(`Could not get cart products, please try again.`);
   }
 
@@ -140,7 +137,6 @@ export const changeFavorites = async function ({ token, id }) {
   });
 
   if (!response.ok) {
-    console.log(await response.json());
     throw new Error(`Couldn't update your favorite products`);
   }
 };
@@ -242,6 +238,7 @@ export const getPaymentIntent = async function ({
   signal,
   shipping,
   products,
+  token,
 }) {
   if (!shipping) throw new Error("You must provide a shipping address");
   if (!products)
@@ -254,7 +251,7 @@ export const getPaymentIntent = async function ({
     {
       signal,
       method: "POST",
-      body: JSON.stringify({ shipping, products }),
+      body: JSON.stringify({ shipping, products, token }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -262,7 +259,6 @@ export const getPaymentIntent = async function ({
   );
 
   if (!response.ok) {
-    console.log(await response.json());
     throw new Error("There has been an error.");
   }
 
@@ -271,13 +267,13 @@ export const getPaymentIntent = async function ({
   return clientSecret;
 };
 
-export const getOrders = async function ({ signal, email }) {
+export const getOrders = async function ({ signal, email, token }) {
   if (!email) throw new Error(`You must provide a valid email`);
 
   const response = await fetch(`http://localhost:3000/orders`, {
     signal,
     method: "POST",
-    body: JSON.stringify({ email }),
+    body: JSON.stringify({ email, token }),
     headers: {
       "Content-Type": "application/json",
     },
@@ -289,14 +285,11 @@ export const getOrders = async function ({ signal, email }) {
 
   const data = await response.json();
 
-  console.log(data);
-
   return data;
 };
 
 export const fetchOneOrder = async function ({ signal, id }) {
   if (!id) {
-    console.log("NO ID");
     throw new Error("You must provide a valid id for your order");
   }
   const response = await fetch(`http://localhost:3000/orders/one-order/${id}`, {
@@ -304,7 +297,6 @@ export const fetchOneOrder = async function ({ signal, id }) {
   });
 
   if (!response.ok) {
-    console.log(await response.json());
     throw new Error("There has been an error with getting your order");
   }
   const data = await response.json();

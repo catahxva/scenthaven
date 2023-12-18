@@ -59,7 +59,6 @@ const UpdateAddress = forwardRef(function (props, ref) {
 
   const closeHandler = function () {
     dialog.current.close();
-    // console.log(addressTest);
     setContentState("normal");
     queryClient.invalidateQueries([`userData`, token]);
   };

@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 4rem;
+  z-index: 9999999999999999999999999999999999999999999;
 }
 
 .filters__group__title {

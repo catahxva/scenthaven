@@ -5,6 +5,14 @@
   gap: 20rem;
 }
 
+@media screen and (max-width: 695px) {
+  .account__data {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+}
+
 .account__data__title {
   font-size: 2.4rem;
   color: #333;

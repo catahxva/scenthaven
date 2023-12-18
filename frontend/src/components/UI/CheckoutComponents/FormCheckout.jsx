@@ -21,8 +21,6 @@ function FormCheckout() {
   const countryRef = useRef();
   const phoneRef = useRef();
 
-  console.log(address);
-
   const addressExists = !address ? false : true;
 
   const submitHandler = function (e) {

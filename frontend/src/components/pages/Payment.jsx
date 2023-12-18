@@ -14,6 +14,7 @@ import PaymentForm from "../UI/PaymentComponents/PaymentForm";
 import Placeholder from "../UI/Placeholder";
 
 function Payment() {
+  const token = useSelector((state) => state.auth.token);
   const address = useSelector((state) => state.tempAddress.address);
   const products = useSelector((state) => state.cart.items);
 
@@ -38,10 +39,8 @@ function Payment() {
   const { data, isError, error } = useQuery({
     queryKey: ["clientSecret", { address, products }],
     queryFn: ({ signal }) =>
-      getPaymentIntent({ signal, shipping: address, products }),
+      getPaymentIntent({ signal, shipping: address, products, token }),
   });
-
-  if (isError) console.log(error);
 
   useEffect(() => {
     setClientSecret(data);

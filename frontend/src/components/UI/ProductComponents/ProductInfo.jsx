@@ -54,7 +54,6 @@ function ProductInfo({ product }) {
   useEffect(() => {
     if (data) {
       faveList = data.data.data;
-      console.log("favorites:", faveList);
 
       const index = faveList.findIndex((fav) => {
         return fav._id === id;

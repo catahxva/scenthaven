@@ -30,7 +30,6 @@ export default function useGetCart({ key, type }) {
   }
 
   if (isError) {
-    console.log(error);
     content = <Placeholder message={error.message} type={"error"} />;
   }
 
@@ -41,7 +40,6 @@ export default function useGetCart({ key, type }) {
   }
 
   if (data && key === "cartCheckout") {
-    console.log("last check");
     const itemsFromDB = data.data.data;
 
     content = <CheckoutItems items={itemsFromDB} />;

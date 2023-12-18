@@ -1,6 +1,6 @@
 import classes from "./Overview.module.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useSearchParams, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -11,12 +11,22 @@ import Filters from "../UI/OverviewComponents/Filters";
 import ProductsGrid from "../UI/OverviewComponents/ProductsGrid";
 import SortingForm from "../UI/OverviewComponents/SortingForm";
 import Pagination from "../UI/OverviewComponents/Pagination";
+import FiltersMobile from "../UI/OverviewComponents/FiltersMobile";
+import FiltersWrapper from "../UI/OverviewComponents/FiltersWrapper";
 
 function Overview() {
+  const [mobileVisibleFilters, setMobileVisibleFilters] = useState(false);
+
+  const showMobileFilters = function () {
+    setMobileVisibleFilters(true);
+  };
+
+  const hideMobileFilters = function () {
+    setMobileVisibleFilters(false);
+  };
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { gender } = useParams();
-
-  console.log(gender);
 
   const entries = Object.entries(Object.fromEntries(searchParams));
 
@@ -42,6 +52,7 @@ function Overview() {
   const queryStr = entries.map((entry) => entry.join("=")).join("&");
 
   useEffect(() => {
+    setMobileVisibleFilters(false);
     window.scrollTo(0, 0);
   }, [queryStr]);
 
@@ -182,7 +193,6 @@ function Overview() {
   if (data) {
     const products = data.data.data;
     maxPages = data.data.maxPages;
-    console.log(data);
 
     productsContent =
       products.length > 0 ? (
@@ -207,20 +217,47 @@ function Overview() {
     };
 
     filtersContent = (
-      <Filters
-        valuesObj={valuesObj}
-        activeValues={activeValues}
-        onClick={filterValueClickHandler}
-      />
+      <>
+        <FiltersMobile
+          visible={mobileVisibleFilters}
+          hideFilters={hideMobileFilters}
+        >
+          <Filters
+            valuesObj={valuesObj}
+            activeValues={activeValues}
+            onClick={filterValueClickHandler}
+          />
+        </FiltersMobile>
+        <FiltersWrapper>
+          <Filters
+            valuesObj={valuesObj}
+            activeValues={activeValues}
+            onClick={filterValueClickHandler}
+          />
+        </FiltersWrapper>
+      </>
     );
   }
 
   return (
     <section className="first__section">
+      <div
+        className={
+          mobileVisibleFilters
+            ? classes.overview__active__bg
+            : classes.overview__inactive__bg
+        }
+      ></div>
       <h2>All products</h2>
       <div className={classes.overview__grid}>
         {filtersContent}
         <div className={classes.overview__container__grid}>
+          <button
+            onClick={showMobileFilters}
+            className={classes.overview__mobile__filter__btn}
+          >
+            Filters
+          </button>
           <SortingForm onChange={sortChangeHandler} activeSort={activeSort} />
           {productsContent}
           {data && (

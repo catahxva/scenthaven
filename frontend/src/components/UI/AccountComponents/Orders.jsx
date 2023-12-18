@@ -14,7 +14,9 @@ function Orders({ orders }) {
         <span className={classes.account__orders__span}>
           You have no orders yet!
         </span>
-        <Link>Start shopping</Link>
+        <Link to="/overview" className={classes.account__orders__link}>
+          Start shopping
+        </Link>
       </>
     );
 

@@ -36,8 +36,6 @@ function PaymentForm() {
 
     setIsProcessing(true);
 
-    console.log(window.location.origin);
-
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {

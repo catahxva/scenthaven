@@ -1,10 +1,7 @@
 import classes from "./Filters.module.css";
 
 function Filters({ valuesObj, activeValues, range, onClick }) {
-  console.log(valuesObj);
   const valuesObjEntries = Object.entries(valuesObj);
-
-  console.log(valuesObjEntries);
 
   const safeValuesObjEntries = valuesObjEntries.filter((entry) => {
     return entry[1] !== undefined;

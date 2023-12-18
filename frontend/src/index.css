@@ -113,3 +113,9 @@ h3 {
     font-size: 1.8rem;
   }
 }
+
+@media screen and (min-width: 1850px) {
+  html {
+    font-size: 70%;
+  }
+}

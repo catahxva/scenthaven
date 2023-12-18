@@ -18,3 +18,18 @@
   padding: 0.6rem 1rem;
   color: #333;
 }
+
+@media screen and (max-width: 580px) {
+  .overview__sorting__form {
+    margin-bottom: 2.5rem;
+  }
+
+  .overview__sorting__form__label {
+    font-size: 1.8rem;
+  }
+
+  .overview__sorting__select {
+    font-size: 1.6rem;
+    padding: 0.5rem 0.8rem;
+  }
+}

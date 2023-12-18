@@ -4,8 +4,6 @@ function Pagination({ maxPage, currentPage, onClick }) {
   const currentPageNumber = Number(currentPage);
   const multiplePages = maxPage > 1;
 
-  console.log(maxPage, currentPageNumber);
-
   let buttons;
 
   if (currentPageNumber === 1 && multiplePages && maxPage === 2) {

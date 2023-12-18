@@ -9,7 +9,6 @@ exports.createFilters = (query, gender) => {
   }
 
   if (query.brand) {
-    console.log(query.brand.split(",").map((b) => new RegExp(b, "i")));
     filters.brand = {
       $in: query.brand.split(","),
     };
@@ -17,7 +16,7 @@ exports.createFilters = (query, gender) => {
 
   if (query.concentration) {
     filters.concentration = {
-      $in: query.concentration.split(",").map((c) => new RegExp(c, "i")),
+      $in: query.concentration.split(","),
     };
   }
 

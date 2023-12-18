@@ -1,0 +1,11 @@
+.filters__wrapper {
+  display: block;
+  visibility: visible;
+}
+
+@media screen and (max-width: 830px) {
+  .filters__wrapper {
+    display: none;
+    visibility: hidden;
+  }
+}

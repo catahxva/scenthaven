@@ -36,7 +36,6 @@ export const authSlice = createSlice({
       state.address = undefined;
     },
     saveAddress(state, action) {
-      console.log(action.payload);
       state.address = action.payload.address;
     },
   },

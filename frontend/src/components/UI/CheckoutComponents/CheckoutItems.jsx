@@ -3,8 +3,6 @@ import classes from "./CheckoutItems.module.css";
 import CheckoutItem from "./CheckoutItem";
 
 function CheckoutItems({ items }) {
-  console.log(items);
-
   const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
 
   return (

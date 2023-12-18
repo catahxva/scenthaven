@@ -1,0 +1,45 @@
+.filters__mobile__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 999999999999999999999999999999999999999999999;
+  padding: 2rem;
+  overflow-y: auto;
+  transform: translateX(-150%);
+  transition: all 0.5s;
+}
+
+@media screen and (max-width: 580px) {
+  .filters__mobile__container {
+    width: 90%;
+  }
+}
+
+.filters__mobile__container__active {
+  transform: translateX(0%);
+}
+
+.filters__mobile__container__interior {
+  width: 100%;
+  position: relative;
+}
+
+.filters__mobile__btn__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filters__mobile__svg {
+  width: 3rem;
+  height: 3rem;
+  color: #333;
+}

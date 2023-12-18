@@ -105,7 +105,6 @@ exports.getOneProduct = async function (req, res, next) {
       },
     });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
@@ -161,7 +160,6 @@ exports.getCartProducts = async function (req, res, next) {
         cartItem.error === true ||
         cartItem.validationError === true
       ) {
-        console.log(cartItem);
         return cartItem;
       }
 

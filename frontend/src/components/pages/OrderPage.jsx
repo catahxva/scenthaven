@@ -28,8 +28,6 @@ function OrderPage() {
 
     const { address, products } = order;
 
-    console.log(order);
-
     content = (
       <>
         <h2>Order {order._id.slice(-4).toUpperCase()}</h2>

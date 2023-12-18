@@ -5,3 +5,43 @@
   column-gap: 5rem;
   align-items: start;
 }
+
+.overview__mobile__filter__btn {
+  font-size: 2rem;
+  font-family: inherit;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  margin-bottom: 2rem;
+  background-color: #f03e3e;
+  color: #fff;
+}
+
+@media screen and (max-width: 830px) {
+  .overview__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .overview__mobile__filter__btn {
+    font-size: 1.8rem;
+  }
+}
+
+.overview__inactive__bg {
+  display: none;
+  visibility: hidden;
+}
+
+.overview__active__bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: block;
+  z-index: 999999999999999999999999999;
+}

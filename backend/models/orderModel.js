@@ -91,7 +91,6 @@ orderSchema.post("save", function () {
     const productDB = await Products.findById(product.productId);
 
     if (!productDB) {
-      console.log("No product found");
       return;
     }
 

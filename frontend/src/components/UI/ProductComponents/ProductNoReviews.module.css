@@ -14,3 +14,9 @@
   font-weight: 500;
   color: #333;
 }
+
+@media screen and (max-width: 600px) {
+  .product__no__reviews__title {
+    font-size: 2rem;
+  }
+}

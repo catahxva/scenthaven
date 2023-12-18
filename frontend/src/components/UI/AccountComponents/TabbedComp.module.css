@@ -23,6 +23,17 @@
   color: #333;
 }
 
+@media screen and (max-width: 435px) {
+  .tabbed__comp__container__btns {
+    gap: 2rem;
+  }
+
+  .tabbed__btn {
+    font-size: 1.6rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
 .tabbed__btn__active {
   background-color: #f03e3e;
   color: #fff;

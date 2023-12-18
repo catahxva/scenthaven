@@ -23,3 +23,16 @@
   font-size: 1.6rem;
   font-weight: 400;
 }
+
+@media screen and (max-width: 600px) {
+  .notification__message {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 353px) {
+  .notification {
+    width: 25rem;
+    text-align: center;
+  }
+}

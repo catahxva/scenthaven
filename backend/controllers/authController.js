@@ -16,8 +16,6 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
-  console.log(user);
-
   user.password = undefined;
 
   res.status(statusCode).json({
@@ -87,8 +85,6 @@ exports.verifyEmail = async function (req, res, next) {
 exports.login = async function (req, res, next) {
   try {
     const { email, password } = req.body;
-
-    console.log(req.body);
 
     if (!email || !password)
       return next(
@@ -171,8 +167,6 @@ exports.resetForgotPassword = async function (req, res, next) {
 exports.resetPassword = async function (req, res, next) {
   try {
     const user = req.user;
-
-    console.log(user);
 
     if (
       !user ||

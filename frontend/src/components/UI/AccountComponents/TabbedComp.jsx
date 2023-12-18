@@ -59,7 +59,7 @@ function TabbedComp() {
     error: ordersError,
   } = useQuery({
     queryKey: [`userOrders`, email],
-    queryFn: ({ signal }) => getOrders({ signal, email }),
+    queryFn: ({ signal }) => getOrders({ signal, email, token }),
     enabled: enabledQuery === "orders",
   });
 
@@ -96,7 +96,6 @@ function TabbedComp() {
 
   if (ordersData && activeTab === "orders") {
     const ordersList = ordersData.data.data;
-    console.log(ordersList);
 
     content = <Orders orders={ordersList} />;
   }

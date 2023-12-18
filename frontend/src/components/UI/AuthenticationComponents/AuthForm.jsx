@@ -28,15 +28,11 @@ function AuthForm({
     if (pass === "passwordConfirm") setPassConfirmState(e.target.value);
   };
 
-  console.log(isSignup);
-
   const enabled =
     isSignup &&
     passState === passConfirmState &&
     passState !== "" &&
     passConfirmState !== "";
-
-  console.log(enabled);
 
   return (
     <div className={classes.auth__container}>

@@ -5,8 +5,6 @@ exports.modifyFavorites = async function (req, res, next) {
   try {
     const productId = req.body.productId;
 
-    console.log(productId);
-
     const product = await Product.findById(productId);
 
     if (!product)

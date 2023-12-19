@@ -59,7 +59,7 @@ function MobileNavigation({ active, onClick }) {
             <li>
               <Link
                 onClick={onClick}
-                to="/overview/unisex"
+                to="/overview/women's"
                 className={classes.mobile__nav__link}
               >
                 Women's
@@ -68,7 +68,7 @@ function MobileNavigation({ active, onClick }) {
             <li>
               <Link
                 onClick={onClick}
-                to="/overview/women's"
+                to="/overview/unisex"
                 className={classes.mobile__nav__link}
               >
                 Unisex

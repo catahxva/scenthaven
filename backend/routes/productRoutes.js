@@ -13,7 +13,7 @@ router.route("/one-product/:id").get(productController.getOneProduct);
 
 router
   .route("/:gender?")
-  .get(authController.isLoggedIn, productController.getAllProducts)
-  .post(productController.createProduct);
+  .get(productController.getAllProducts)
+  .post(authController.isLoggedIn, productController.createProduct);
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const Review = require("./models/reviewModel");
 
 dotenv.config({ path: "./config.env" });
 

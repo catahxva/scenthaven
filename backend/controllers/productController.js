@@ -14,14 +14,12 @@ exports.getAllProducts = async function (req, res, next) {
     const sortCriteria = createSort(req.query);
     const [skip, limit] = createPagination(req.query);
 
-    const totalProducts = await Product.countDocuments(filters);
+    const [totalProducts, docs] = await Promise.all([
+      Product.countDocuments(filters),
+      Product.find(filters).sort(sortCriteria).skip(skip).limit(limit).lean(),
+    ]);
 
     const maxPages = Math.ceil(totalProducts / 15);
-
-    const docs = await Product.find(filters)
-      .sort(sortCriteria)
-      .skip(skip)
-      .limit(limit);
 
     res.status(200).json({
       status: "success",

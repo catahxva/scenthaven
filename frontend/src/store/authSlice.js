@@ -29,7 +29,7 @@ export const authSlice = createSlice({
     },
     logout(state) {
       state.token = undefined;
-      state.email = action.payload.email;
+      state.email = undefined;
       state.expiration = undefined;
       state.isAuthenticated = false;
       state.userName = undefined;

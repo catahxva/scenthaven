@@ -1,9 +1,7 @@
 const Orders = require("../models/orderModel");
 const Product = require("../models/productModel");
 const AppError = require("../util/appError");
-const stripe = require("stripe")(
-  "sk_test_51OFgTpANFg5WW6bUiQj8KQ643R0CiLDjwfZCDgrzTtvDNvYPrXfvriFMchR326MZT1GznzZu885DcmweTe5YJtLN00xuqU7W7x"
-);
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 const sendEmail = require("../util/email");
 const emailTemplate = require("../util/emailTemplate");

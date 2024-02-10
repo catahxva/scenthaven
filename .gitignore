@@ -21,4 +21,4 @@
 /frontend/.gitignore
 
 /backend/node_modules/
-
+/backend/config.env 

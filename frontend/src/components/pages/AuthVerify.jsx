@@ -52,13 +52,16 @@ export async function action({ params }) {
     token,
   };
 
-  const response = await fetch(`http://localhost:3000/user/verify-email`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bodyData),
-  });
+  const response = await fetch(
+    `http://localhost:3000/mainapi/scent-haven/user/verify-email`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyData),
+    }
+  );
 
   const res = await response.json();
 

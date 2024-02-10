@@ -5,7 +5,7 @@ export const addProductToCart = function (productObject, productsList) {
   return async function (dispatch) {
     const checkForProduct = async function () {
       const response = await fetch(
-        `http://localhost:3000/products/one-product/${productObject.id}`
+        `http://localhost:3000/mainapi/scent-haven/products/one-product/${productObject.id}`
       );
 
       if (!response.ok) throw new Error(`Could not add to cart`);

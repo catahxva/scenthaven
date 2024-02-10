@@ -5,13 +5,31 @@ const baseUrl = `http://localhost:3000/mainapi/scent-haven/`;
 export const queryClient = new QueryClient();
 
 export const fetchProducts = async function ({ signal, gender, queryString }) {
-  let url;
+  let url = `${baseUrl}products`;
 
-  if (!queryString && !gender) url = `${baseUrl}products`;
+  console.log(queryString);
 
-  if (queryString && !gender) url = `${baseUrl}products${queryString}`;
+  console.log(gender);
 
-  if (queryString && gender) url = `${baseUrl}products/${gender}${queryString}`;
+  if (queryString && queryString !== "?" && !gender) {
+    console.log("CASE ONE");
+
+    url = `${url}${queryString}`;
+  }
+
+  if (queryString && queryString !== "?" && gender) {
+    console.log("CASE TWO");
+
+    url = `${url}/${gender}${queryString}`;
+  }
+
+  if (queryString === "?" && gender) {
+    console.log("CASE THREE");
+
+    url = `${url}/${gender}`;
+  }
+
+  console.log(url);
 
   const response = await fetch(url, {
     signal,
@@ -233,17 +251,14 @@ export const getPaymentIntent = async function ({
       "You must have products inside your cart to complete a payment"
     );
 
-  const response = await fetch(
-    `http://localhost:3000/orders/create-payment-intent`,
-    {
-      signal,
-      method: "POST",
-      body: JSON.stringify({ shipping, products, token }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await fetch(`${baseUrl}orders/create-payment-intent`, {
+    signal,
+    method: "POST",
+    body: JSON.stringify({ shipping, products, token }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   const data = await response.json();
 

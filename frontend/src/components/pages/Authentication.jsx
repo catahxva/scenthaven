@@ -117,6 +117,8 @@ export async function action({ request, params }) {
 
   const data = Object.fromEntries(await request.formData());
 
+  console.log(data);
+
   if (mode === "reset") {
     const existingToken = JSON.parse(localStorage.getItem(`token`));
     data.token = existingToken;
@@ -126,13 +128,16 @@ export async function action({ request, params }) {
     data.token = resetToken;
   }
 
-  const response = await fetch(`http://localhost:3000/user/${mode}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+  const response = await fetch(
+    `http://localhost:3000/mainapi/scent-haven/user/${mode}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
 
   if (!response.ok && mode === "login") {
     throw json(
@@ -142,6 +147,9 @@ export async function action({ request, params }) {
   }
 
   if (!response.ok) {
+    console.log(response);
+    console.log(response.ok);
+
     throw json(
       { message: "Could not authenticate user, please try again later." },
       { status: 500 }

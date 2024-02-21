@@ -9,14 +9,12 @@ function CheckoutItems({ items }) {
     <div className={classes.checkout__container__items}>
       <h2>Your items</h2>
       <div className={classes.checkout__flex__items}>
-        {items.map((item) => {
-          return (
-            <CheckoutItem
-              item={item}
-              key={`${item.id}${item.selectedQuantity.quantity}`}
-            />
-          );
-        })}
+        {items.length > 0 &&
+          items.map((item) => {
+            return (
+              <CheckoutItem item={item} key={`${item.id}${item.quantity}`} />
+            );
+          })}
       </div>
       <div className={classes.checkout__container__total}>
         <span className={classes.checkout__total}>Total: {totalPrice}$</span>

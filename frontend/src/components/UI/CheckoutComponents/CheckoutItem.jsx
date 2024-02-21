@@ -6,9 +6,7 @@ function CheckoutItem({ item }) {
       <div>
         <span className={classes.checkout__item__brand}>{item.brand}</span>
         <span className={classes.checkout__item__name}>{item.name}</span>
-        <span className={classes.checkout__item__span}>
-          {item.selectedQuantity.quantity} ML
-        </span>
+        <span className={classes.checkout__item__span}>{item.quantity} ML</span>
       </div>
       <div className={classes.checkout__item__details}>
         <span className={classes.checkout__item__span}>

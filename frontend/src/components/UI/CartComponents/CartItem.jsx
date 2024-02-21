@@ -7,9 +7,6 @@ import { cartActions } from "../../../store/cartSlice";
 import { Link } from "react-router-dom";
 
 function CartItem({ item }) {
-  const [message, setMessage] = useState(null);
-
-  const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
   const removeHandler = function (id, quantity) {
@@ -27,15 +24,7 @@ function CartItem({ item }) {
       quantity,
     };
 
-    if (
-      items.find((i) => i.id === id).productQuantity ===
-      item.selectedQuantity.stock
-    ) {
-      setMessage(
-        `The maximum quantity for this product is ${item.selectedQuantity.stock}`
-      );
-      return;
-    }
+    if (item.reachedMaxStockLimit) return;
 
     dispatch(cartActions.increaseQuantity(itemObj));
   };
@@ -49,8 +38,6 @@ function CartItem({ item }) {
     if (productQuantity > 1) dispatch(cartActions.decreaseQuantity(itemObj));
 
     if (productQuantity <= 1) dispatch(cartActions.removeProduct(itemObj));
-
-    setMessage(null);
   };
 
   return (
@@ -72,7 +59,7 @@ function CartItem({ item }) {
           </span>
           <div className={classes.cart__item__container__mobile}>
             <span className={classes.cart__item__selected__quantity__mobile}>
-              {item.selectedQuantity.quantity} ML
+              {item.quantity} ML
             </span>
             <span className={classes.cart__item__price__mobile}>
               {item.price}$
@@ -81,7 +68,7 @@ function CartItem({ item }) {
         </div>
         <div>
           <span className={classes.cart__item__selected__quantity}>
-            {item.selectedQuantity.quantity} ML
+            {item.quantity} ML
           </span>
         </div>
         <div>
@@ -90,11 +77,7 @@ function CartItem({ item }) {
         <div className={classes.cart__item__quantity__controller}>
           <button
             onClick={() =>
-              decreaseHandler(
-                item.id,
-                item.selectedQuantity.quantity,
-                item.productQuantity
-              )
+              decreaseHandler(item.id, item.quantity, item.productQuantity)
             }
             className={classes.cart__item__button}
           >
@@ -117,9 +100,7 @@ function CartItem({ item }) {
             {item.productQuantity}
           </span>
           <button
-            onClick={() =>
-              increaseHandler(item.id, item.selectedQuantity.quantity)
-            }
+            onClick={() => increaseHandler(item.id, item.quantity)}
             className={classes.cart__item__button}
           >
             <svg
@@ -141,17 +122,13 @@ function CartItem({ item }) {
         <div>
           <button
             className={classes.cart__item__remove}
-            onClick={() =>
-              removeHandler(item.id, item.selectedQuantity.quantity)
-            }
+            onClick={() => removeHandler(item.id, item.quantity)}
           >
             Remove
           </button>
           <button
             className={classes.cart__item__remove__mobile}
-            onClick={() =>
-              removeHandler(item.id, item.selectedQuantity.quantity)
-            }
+            onClick={() => removeHandler(item.id, item.quantity)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -176,11 +153,7 @@ function CartItem({ item }) {
         >
           <button
             onClick={() =>
-              decreaseHandler(
-                item.id,
-                item.selectedQuantity.quantity,
-                item.productQuantity
-              )
+              decreaseHandler(item.id, item.quantity, item.productQuantity)
             }
             className={classes.cart__item__button}
           >
@@ -203,9 +176,7 @@ function CartItem({ item }) {
             {item.productQuantity}
           </span>
           <button
-            onClick={() =>
-              increaseHandler(item.id, item.selectedQuantity.quantity)
-            }
+            onClick={() => increaseHandler(item.id, item.quantity)}
             className={classes.cart__item__button}
           >
             <svg
@@ -226,7 +197,7 @@ function CartItem({ item }) {
         </div>
         <button
           className={`${classes.cart__item__remove__mobile} ${classes.cart__item__remove__mobile__smaller}`}
-          onClick={() => removeHandler(item.id, item.selectedQuantity.quantity)}
+          onClick={() => removeHandler(item.id, item.quantity)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -244,7 +215,11 @@ function CartItem({ item }) {
           </svg>
         </button>
       </div>
-      {message && <p className={classes.cart__warning__stock}>{message}</p>}
+      {item.reachedMaxStockLimit && (
+        <p className={classes.cart__warning__stock}>
+          You have reached the max quantity for this product
+        </p>
+      )}
     </div>
   );
 }

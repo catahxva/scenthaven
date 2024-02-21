@@ -399,3 +399,9 @@ span {
     display: flex;
   }
 }
+
+.unavailable__message {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 1.6rem;
+}

@@ -5,19 +5,19 @@ import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 
 function CartItems({ items }) {
-  const totalPrice = items.reduce((acc, c) => acc + c.price, 0);
+  const totalPrice = items.reduce((acc, item) => {
+    return acc + item.price;
+  }, 0);
+
+  console.log(items);
 
   return (
     <>
       <div className={classes.cart__items__container}>
-        {items.map((item) => {
-          return (
-            <CartItem
-              item={item}
-              key={`${item.id}${item.selectedQuantity.quantity}`}
-            />
-          );
-        })}
+        {items.length > 0 &&
+          items.map((item) => {
+            return <CartItem item={item} key={`${item.id}${item.quantity}`} />;
+          })}
       </div>
       <div className={classes.cart__total__container}>
         <div>

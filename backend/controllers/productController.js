@@ -6,6 +6,8 @@ const {
 const Product = require("../models/productModel");
 const AppError = require("../util/appError");
 
+const itemsDBScent = require("../util/itemsDBScent");
+
 exports.getAllProducts = async function (req, res, next) {
   try {
     const { gender } = req.params;
@@ -109,117 +111,47 @@ exports.getOneProduct = async function (req, res, next) {
 
 exports.getCartProducts = async function (req, res, next) {
   try {
-    // get objects containing the item ids from inside the request body.
     const cartItems = req.body.products;
 
-    // create array of promises by looping over the array of
-    // objects and calling the findById function.
-    const cartPromises = cartItems.map(async (item) => {
-      try {
-        const foundItem = await Product.findById(item.id);
+    const awaitedCartItemsDB = await itemsDBScent(cartItems, Product);
 
-        if (!foundItem) {
-          return {
-            notFound: true,
-            itemId: item.id,
-          };
-        }
-
-        if (!foundItem.name) {
-          return {
-            validationError: true,
-            itemId: item.id,
-            validationErrorMessage: "Name is required",
-          };
-        }
-
-        return foundItem;
-      } catch (err) {
-        return {
-          error: true,
-          itemId: item.id,
-          errorMessage: err.message,
-        };
-      }
-    });
-
-    // using promise.all to settle the array of promises and
-    // get the actual data.
-    const cartItemsDB = await Promise.all(cartPromises);
-
-    // creating the array of items which will be sent to the
-    // frontend and used to render the cart.
-    // using both the current element in the iteration and the
-    // index fo the current element to gets its equivalent from
-    // the cartItems array.
-    const newCartItems = cartItemsDB.map((cartItem, index) => {
-      if (
-        cartItem.notFound === true ||
-        cartItem.error === true ||
-        cartItem.validationError === true
-      ) {
+    const finalCartItems = awaitedCartItemsDB.map((cartItem, i) => {
+      if (cartItem.notFound || cartItem.noStock || cartItem.error) {
         return cartItem;
       }
 
-      // getting the current object from the cartItems array based
-      // on the current index.
-      const requestCartItem = cartItems[index];
-
-      // the selectedQuantity should be the quantity that is
-      // on the requestCartItem, because that is coming from the
-      // user, so we are trying to find it inside the item
-      // found in the db.
       const selectedQuantity = cartItem.quantities.find((q) => {
-        return q.quantity === requestCartItem.quantity;
+        return q.quantity === cartItems[i].quantity;
       });
 
-      // if the selectedQuantity does not exist, or its stock is
-      // equal to 0, we want to return for that item an object
-      // with the name, brand and the outOfStock property set
-      // to true.
-      if (!selectedQuantity || selectedQuantity.stock === 0) {
-        return {
-          name: cartItem.name,
-          brand: cartItem.brand,
-          outOfStock: true,
-        };
-      }
+      const reachedMaxStockLimit =
+        cartItems[i].productQuantity >= selectedQuantity.stock;
+      const productQuantity = reachedMaxStockLimit
+        ? selectedQuantity.stock
+        : cartItems[i].productQuantity;
+      const quantity = cartItems[i].quantity;
 
-      // if the actual stock is bigger than the quantity the
-      // frontend is asking for, the quantity is the one that
-      // the frontend is asking for, if not, it is the max
-      // value of the stock.
-      const productQuantity =
-        selectedQuantity.stock >= requestCartItem.productQuantity
-          ? requestCartItem.productQuantity
-          : selectedQuantity.stock;
-
-      // creating the price based on the quantity and using the
-      // price coming from the db.
       const price = selectedQuantity.price * productQuantity;
 
-      // return an object for each object coming from the
-      // request.
       return {
-        id: requestCartItem.id,
+        id: cartItem.id,
         name: cartItem.name,
         brand: cartItem.brand,
-        productQuantity,
-        selectedQuantity,
-        price,
         imageCover: cartItem.imageCover,
+        productQuantity,
+        reachedMaxStockLimit,
+        quantity,
+        price,
       };
     });
 
-    // sending the data.
     res.status(200).json({
       status: "success",
       data: {
-        data: newCartItems,
+        data: finalCartItems,
       },
     });
   } catch (err) {
-    // sending any error further to our global error handler.
     res.status(400).json({
       status: "error",
       data: err,

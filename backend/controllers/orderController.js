@@ -3,46 +3,51 @@ const Product = require("../models/productModel");
 const AppError = require("../util/appError");
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 
+const itemsDBScent = require("../util/itemsDBScent");
 const sendEmail = require("../util/email");
 const emailTemplate = require("../util/emailTemplate");
 
 exports.createPaymentIntent = async function (req, res, next) {
   try {
-    const { shipping: shippingInfo } = req.body;
-    const { products: requestProducts } = req.body;
+    const { shipping: shippingInfo, products: cartItems } = req.body;
 
     const email = shippingInfo.email;
 
-    const productPromises = requestProducts.map(async (product) => {
-      return await Product.findById(product.id);
+    const awaitedCartItemsDB = await itemsDBScent(cartItems, Product);
+
+    const availableItems = awaitedCartItemsDB.filter((item) => {
+      return !item.notFound || !item.noStock || !item.error;
     });
 
-    const productsFromDB = await Promise.all(productPromises);
+    if (availableItems.length <= 0) {
+      return next(new AppError("No products inside cart", 400));
+    }
 
-    const prices = productsFromDB.map((product, index) => {
-      const [selectedQuantity] = product.quantities.filter((q) => {
-        return q.quantity === requestProducts[index].quantity;
+    const availableRequestItems = cartItems.filter((item, i) => {
+      return item.id === availableItems[i]._id.toString();
+    });
+
+    const prices = availableItems.map((product, index) => {
+      const selectedQuantity = product.quantities.find((q) => {
+        return q.quantity === availableRequestItems[index].quantity;
       });
 
-      if (!selectedQuantity || selectedQuantity.stock <= 0)
-        return next(
-          new AppError(
-            `This quantity for ${product.name} is no longer available.`,
-            400
-          )
-        );
+      const finalQuantity =
+        selectedQuantity.stock > availableRequestItems[index].productQuantity
+          ? availableRequestItems[index].productQuantity
+          : selectedQuantity.stock;
 
-      return selectedQuantity.price * requestProducts[index].productQuantity;
+      return finalQuantity * selectedQuantity.price;
     });
 
     const total = prices.reduce((acc, currentPrice) => acc + currentPrice, 0);
 
-    const productsForOrder = productsFromDB.map((product, i) => {
+    const finalPaymentItems = availableItems.map((product, i) => {
       return {
         productId: product._id,
-        productQuantity: requestProducts[i].productQuantity,
+        productQuantity: availableRequestItems[i].productQuantity,
         quantity: product.quantities.filter((q) => {
-          return q.quantity === requestProducts[i].quantity;
+          return q.quantity === availableRequestItems[i].quantity;
         })[0].quantity,
         cover: product.imageCover,
         name: product.name,
@@ -59,6 +64,9 @@ exports.createPaymentIntent = async function (req, res, next) {
       },
       metadata: {
         email: email,
+        products: JSON.stringify(finalPaymentItems),
+        user: JSON.stringify(req.user?._id),
+        address: JSON.stringify(shippingInfo),
       },
       shipping: {
         name: shippingInfo.name,
@@ -75,7 +83,7 @@ exports.createPaymentIntent = async function (req, res, next) {
 
     const newOrder = await Orders.create({
       user: req.user?._id,
-      products: productsForOrder,
+      products: finalPaymentItems,
       address: shippingInfo,
       total,
     });
@@ -89,6 +97,7 @@ exports.createPaymentIntent = async function (req, res, next) {
     const html = emailTemplate(preheaderText, message, ctaText, ctaLink);
 
     await sendEmail({
+      from: "<test@gmail.com>",
       email: email,
       subject: "Order confirmation",
       html,
@@ -97,6 +106,11 @@ exports.createPaymentIntent = async function (req, res, next) {
     res.status(200).json({
       status: "success",
       clientSecret: paymentIntent.client_secret,
+      message:
+        finalPaymentItems.reduce((acc, item) => acc + item.productQuantity, 0) <
+        cartItems.reduce((acc, item) => acc + item.productQuantity, 0)
+          ? "Some items inside of your cart have been removed"
+          : "",
     });
   } catch (err) {
     next(err);
